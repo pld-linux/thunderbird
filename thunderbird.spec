@@ -24,26 +24,23 @@
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
 %endif
 
-Summary:	Icedove - email client
-Summary(pl.UTF-8):	Icedove - klient poczty
-Name:		icedove
+Summary:	Thunderbird - email client
+Summary(pl.UTF-8):	Thunderbird - klient poczty
+Name:		thunderbird
 Version:	45.8.0
 Release:	0.1
 License:	MPL v2.0
 Group:		X11/Applications/Mail
-Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/thunderbird-%{version}.source.tar.xz
+Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
 # Source0-md5:	4e04b1618273f946f00f8ea547578895
-Source2:	%{name}-branding.tar.xz
-# Source2-md5:	66753bc5c924d7492b6b5c9bdc3e4b5b
 Source4:	%{name}.desktop
 Source5:	%{name}.sh
-Patch0:		%{name}-branding.patch
 Patch2:		%{name}-prefs.patch
 Patch5:		%{name}-extensiondir.patch
 Patch6:		no-subshell.patch
 Patch8:		enable-addons.patch
 Patch9:		mozilla-1269171-badalloc.patch
-URL:		http://www.pld-linux.org/Packages/Icedove
+URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	GConf2-devel >= 1.2.1
 BuildRequires:	alsa-lib-devel
 BuildRequires:	automake
@@ -66,18 +63,18 @@ BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
 BuildRequires:	libpng-devel >= 1.4.1
 BuildRequires:	libstdc++-devel
+BuildRequires:	libvpx-devel >= 1.3.0
 BuildRequires:	mozldap-devel
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
 BuildRequires:	nss-devel >= 1:%{nss_ver}
 BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	perl-base >= 1:5.6
-BuildRequires:	python-virtualenv
 BuildRequires:	pkgconfig
 BuildRequires:	python >= 1:2.5
+BuildRequires:	python-virtualenv
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.8.4.2
 BuildRequires:	startup-notification-devel >= 0.8
-BuildRequires:	libvpx-devel >= 1.3.0
 BuildRequires:	virtualenv
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXinerama-devel
@@ -85,8 +82,8 @@ BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	yasm
 BuildRequires:	zip
 %if %{with xulrunner}
-BuildRequires:	xulrunner-devel >= %{xulrunner_ver}
 BuildRequires:	xulrunner-devel < 2:32
+BuildRequires:	xulrunner-devel >= %{xulrunner_ver}
 %else
 Requires:	glib2 >= 1:2.20
 %{!?with_gtk3:Requires:	gtk+2 >= 2:2.14}
@@ -105,12 +102,12 @@ Requires(post):	mktemp >= 1.5-18
 Requires:	libjpeg-turbo
 Obsoletes:	mozilla-thunderbird
 Obsoletes:	mozilla-thunderbird-dictionary-en-US
-Conflicts:	icedove-lang-resources < %{version}
+Conflicts:	thunderbird-lang-resources < %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		filterout_cpp		-D_FORTIFY_SOURCE=[0-9]+
 
-# iceweasel/icedove/iceape provide their own versions
+# firefox/thunderbird/seamonkey provide their own versions
 %define		_noautoprovfiles	%{_libdir}/%{name}/components
 %if %{without xulrunner}
 # we don't want these to satisfy packages depending on xulrunner
@@ -123,29 +120,28 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		objdir		%{topdir}/obj-%{_target_cpu}
 
 %description
-Icedove is an open-source, fast and portable email client.
+Thunderbird is an open-source, fast and portable email client.
 
 %description -l pl.UTF-8
-Icedove jest mającym otwarte źródła, szybkim i przenośnym klientem
+Thunderbird jest mającym otwarte źródła, szybkim i przenośnym klientem
 poczty.
 
 %package addon-lightning
-Summary:	An integrated calendar for Icedove
-Summary(pl.UTF-8):	Zintegrowany kalendarz dla Icedove
+Summary:	An integrated calendar for Thunderbird
+Summary(pl.UTF-8):	Zintegrowany kalendarz dla Thunderbird
 License:	MPL 1.1 or GPL v2+ or LGPL v2.1+
 Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
 
 %description addon-lightning
-Lightning is an calendar extension to Icedove email client.
+Lightning is an calendar extension to Thunderbird email client.
 
 %description addon-lightning -l pl.UTF-8
-Lightning to rozszerzenie do klienta poczty Icedove dodające
+Lightning to rozszerzenie do klienta poczty Thunderbird dodające
 funkcjonalność kalendarza.
 
 %prep
-%setup -q -n thunderbird-%{version} -a2
-%patch0 -p1
+%setup -q
 %patch2 -p1
 %patch5 -p2
 %patch6 -p1
@@ -234,7 +230,6 @@ ac_add_options --enable-startup-notification
 ac_add_options --enable-system-cairo
 ac_add_options --enable-system-hunspell
 ac_add_options --enable-system-sqlite
-ac_add_options --with-branding=icedove/branding
 ac_add_options --with-default-mozilla-five-home=%{_libdir}/%{name}
 ac_add_options --with-distribution-id=org.pld-linux
 %if %{with xulrunner}
@@ -280,16 +275,13 @@ cd %{objdir}
 	installdir=%{_libdir}/%{name} \
 	PKG_SKIP_STRIP=1
 
-%{__make} -C icedove/branding install \
-	DESTDIR=$RPM_BUILD_ROOT
+cp -a dist/thunderbird/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
 
-cp -a dist/icedove/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
- 
 %if %{with xulrunner}
 # needed to find mozilla runtime
 ln -s ../xulrunner $RPM_BUILD_ROOT%{_libdir}/%{name}/xulrunner
 %endif
- 
+
 # Enable crash reporter for Thunderbird application
 %if %{with crashreporter}
 %{__sed} -i -e 's/\[Crash Reporter\]/[Crash Reporter]\nEnabled=1/' $RPM_BUILD_ROOT%{_libdir}/%{name}/application.ini
@@ -313,23 +305,13 @@ install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/extensions
 ln -s %{_datadir}/myspell $RPM_BUILD_ROOT%{_libdir}/%{name}/dictionaries
 %endif
 
-%{__sed} -e "s|%MOZAPPDIR%|%{_libdir}/%{name}|" \
-	 -e "s|%MOZ_APP_DISPLAYNAME%|Icedove|" \
-	%{topdir}/mozilla/mozilla/build/unix/mozilla.in > $RPM_BUILD_ROOT%{_libdir}/%{name}/icedove
+#%{__sed} -e "s|%MOZAPPDIR%|%{_libdir}/%{name}|" \
+#	 -e "s|%MOZ_APP_DISPLAYNAME%|Thunderbird|" \
+#	%{topdir}/mozilla/mozilla/build/unix/mozilla.in > $RPM_BUILD_ROOT%{_libdir}/%{name}/thunderbird
 
-%{__sed} -e 's,@LIBDIR@,%{_libdir},' %{SOURCE5} > $RPM_BUILD_ROOT%{_bindir}/icedove
+%{__sed} -e 's,@LIBDIR@,%{_libdir},' %{SOURCE5} > $RPM_BUILD_ROOT%{_bindir}/thunderbird
 ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/thunderbird
 ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/mozilla-thunderbird
-
-# install icons and desktop file
-cp -p %{topdir}/mozilla/icedove/branding/content/icon64.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
-for i in 16 32 48 64 128 256; do
-	install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps
-	cp -a %{topdir}/mozilla/icedove/branding/icedove${i}.png \
-		$RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps/icedove.png
-done
-install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/scalable/apps
-cp -a %{topdir}/mozilla/icedove/branding/icedove.svg $RPM_BUILD_ROOT%{_iconsdir}/hicolor/scalable/apps/icedove.svg
 
 cp -p %{SOURCE4} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
@@ -344,7 +326,7 @@ umask 022
 # also TMPDIR could be pointing to sudo user's homedir so we reset that too.
 t=$(mktemp -d)
 %{__rm} -f %{_libdir}/%{name}/components/{compreg,xpti}.dat
-TMPDIR= TMP= HOME=$t %{_libdir}/%{name}/icedove -register
+TMPDIR= TMP= HOME=$t %{_libdir}/%{name}/thunderbird -register
 rm -rf $t
 EOF
 chmod a+rx $RPM_BUILD_ROOT%{_libdir}/%{name}/register
@@ -373,7 +355,7 @@ exit 0
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/icedove
+%attr(755,root,root) %{_bindir}/thunderbird
 %attr(755,root,root) %{_bindir}/mozilla-thunderbird
 %attr(755,root,root) %{_bindir}/thunderbird
 %dir %{_libdir}/%{name}
@@ -384,7 +366,7 @@ exit 0
 %{_libdir}/%{name}/components/components.manifest
 %attr(755,root,root) %{_libdir}/%{name}/*.sh
 %attr(755,root,root) %{_libdir}/%{name}/*-bin
-%attr(755,root,root) %{_libdir}/%{name}/icedove
+%attr(755,root,root) %{_libdir}/%{name}/thunderbird
 %attr(755,root,root) %{_libdir}/%{name}/register
 %{_libdir}/%{name}/omni.ja
 %if %{without xulrunner}
@@ -408,8 +390,8 @@ exit 0
 %{_libdir}/%{name}/dictionaries
 %endif
 
-%{_pixmapsdir}/icedove.png
-%{_desktopdir}/icedove.desktop
+%{_pixmapsdir}/thunderbird.png
+%{_desktopdir}/thunderbird.desktop
 
 %dir %{_datadir}/%{name}
 %dir %{_libdir}/%{name}/distribution
@@ -430,7 +412,7 @@ exit 0
 %ghost %{_libdir}/%{name}/components/compreg.dat
 %ghost %{_libdir}/%{name}/components/xpti.dat
 
-%{_iconsdir}/hicolor/*/apps/icedove.*
+%{_iconsdir}/hicolor/*/apps/thunderbird.*
 
 %if %{with lightning}
 %files addon-lightning
