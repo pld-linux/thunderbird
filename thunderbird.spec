@@ -36,7 +36,6 @@ Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{vers
 Source4:	%{name}.desktop
 Source5:	%{name}.sh
 Patch2:		%{name}-prefs.patch
-Patch5:		%{name}-extensiondir.patch
 Patch6:		no-subshell.patch
 Patch8:		enable-addons.patch
 Patch9:		mozilla-1269171-badalloc.patch
@@ -143,7 +142,6 @@ funkcjonalność kalendarza.
 %prep
 %setup -q
 %patch2 -p1
-%patch5 -p2
 %patch6 -p1
 %patch8 -p1
 %patch9 -p1
