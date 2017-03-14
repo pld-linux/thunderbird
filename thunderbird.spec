@@ -33,12 +33,12 @@ License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
 # Source0-md5:	4e04b1618273f946f00f8ea547578895
-Source4:	%{name}.desktop
-Source5:	%{name}.sh
-Patch2:		prefs.patch
-Patch6:		no-subshell.patch
-Patch8:		enable-addons.patch
-Patch9:		mozilla-1269171-badalloc.patch
+Source1:	%{name}.desktop
+Source2:	%{name}.sh
+Patch0:		prefs.patch
+Patch1:		no-subshell.patch
+Patch2:		enable-addons.patch
+Patch3:		mozilla-1269171-badalloc.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	GConf2-devel >= 1.2.1
 BuildRequires:	alsa-lib-devel
@@ -141,10 +141,10 @@ funkcjonalność kalendarza.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 %patch2 -p1
-%patch6 -p1
-%patch8 -p1
-%patch9 -p1
+%patch3 -p1
 
 %build
 cat << EOF > .mozconfig
@@ -307,11 +307,11 @@ ln -s %{_datadir}/myspell $RPM_BUILD_ROOT%{_libdir}/%{name}/dictionaries
 #	 -e "s|%MOZ_APP_DISPLAYNAME%|Thunderbird|" \
 #	%{topdir}/mozilla/mozilla/build/unix/mozilla.in > $RPM_BUILD_ROOT%{_libdir}/%{name}/thunderbird
 
-%{__sed} -e 's,@LIBDIR@,%{_libdir},' %{SOURCE5} > $RPM_BUILD_ROOT%{_bindir}/thunderbird
+%{__sed} -e 's,@LIBDIR@,%{_libdir},' %{SOURCE2} > $RPM_BUILD_ROOT%{_bindir}/thunderbird
 ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/thunderbird
 ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/mozilla-thunderbird
 
-cp -p %{SOURCE4} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
 # files created by regxpcom -register in post
 touch $RPM_BUILD_ROOT%{_libdir}/%{name}/components/compreg.dat
