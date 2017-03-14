@@ -35,7 +35,7 @@ Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{vers
 # Source0-md5:	4e04b1618273f946f00f8ea547578895
 Source4:	%{name}.desktop
 Source5:	%{name}.sh
-Patch2:		%{name}-prefs.patch
+Patch2:		prefs.patch
 Patch6:		no-subshell.patch
 Patch8:		enable-addons.patch
 Patch9:		mozilla-1269171-badalloc.patch
