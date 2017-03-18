@@ -35,6 +35,7 @@ Patch0:		prefs.patch
 Patch1:		no-subshell.patch
 Patch2:		enable-addons.patch
 Patch3:		mozilla-1269171-badalloc.patch
+Patch4:		mozilla-1245783.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	GConf2-devel >= 1.2.1
 BuildRequires:	alsa-lib-devel
@@ -134,13 +135,11 @@ funkcjonalność kalendarza.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 cat << EOF > .mozconfig
 mk_add_options MOZ_OBJDIR=%{objdir}
-
-export CFLAGS="%{rpmcflags}"
-export CXXFLAGS="%{rpmcflags}"
 
 %if %{with crashreporter}
 export MOZ_DEBUG_SYMBOLS=1
@@ -168,8 +167,6 @@ ac_add_options --enable-debugger-info-modules
 ac_add_options --enable-crash-on-assert
 %else
 ac_add_options --disable-debug
-ac_add_options --disable-debug-modules
-ac_add_options --disable-logging
 ac_add_options --enable-optimize="%{rpmcflags} -Os"
 %endif
 ac_add_options --disable-strip
