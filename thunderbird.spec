@@ -1,8 +1,9 @@
 # TODO:
 # - build with system mozldap
+# - fix startup crash "TypeError: a is null"
 #
 # Conditional builds
-%bcond_with	gtk3		# GTK+ 3.x instead of 2.x
+%bcond_without	gtk3		# GTK+ 3.x instead of 2.x
 %bcond_without	ldap		# disable e-mail address lookups in LDAP directories
 %bcond_without	lightning	# disable Sunbird/Lightning calendar
 %bcond_with	crashreporter	# report crashes to crash-stats.mozilla.com
@@ -23,19 +24,18 @@
 Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
-Version:	45.8.0
+Version:	52.0.1
 Release:	0.1
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
-# Source0-md5:	4e04b1618273f946f00f8ea547578895
+# Source0-md5:	e66a1f513258a515089eed70a7d2a509
 Source1:	%{name}.desktop
 Source2:	%{name}.sh
 Patch0:		prefs.patch
 Patch1:		no-subshell.patch
 Patch2:		enable-addons.patch
-Patch3:		mozilla-1269171-badalloc.patch
-Patch4:		mozilla-1245783.patch
+Patch3:		mozilla-1245783.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	GConf2-devel >= 1.2.1
 BuildRequires:	alsa-lib-devel
@@ -135,7 +135,6 @@ funkcjonalność kalendarza.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 cat << EOF > .mozconfig
@@ -147,18 +146,6 @@ export MOZ_DEBUG_SYMBOLS=1
 
 # Options for 'configure' (same as command-line options).
 ac_add_options --prefix=%{_prefix}
-ac_add_options --exec-prefix=%{_exec_prefix}
-ac_add_options --bindir=%{_bindir}
-ac_add_options --sbindir=%{_sbindir}
-ac_add_options --sysconfdir=%{_sysconfdir}
-ac_add_options --datadir=%{_datadir}
-ac_add_options --includedir=%{_includedir}
-ac_add_options --libdir=%{_libdir}
-ac_add_options --libexecdir=%{_libexecdir}
-ac_add_options --localstatedir=%{_localstatedir}
-ac_add_options --sharedstatedir=%{_sharedstatedir}
-ac_add_options --mandir=%{_mandir}
-ac_add_options --infodir=%{_infodir}
 %if %{?debug:1}0
 ac_add_options --disable-optimize
 ac_add_options --enable-debug
@@ -170,9 +157,10 @@ ac_add_options --disable-debug
 ac_add_options --enable-optimize="%{rpmcflags} -Os"
 %endif
 ac_add_options --disable-strip
-ac_add_options --disable-strip-libs
+ac_add_options --disable-install-strip
 %if %{with tests}
 ac_add_options --enable-tests
+ac_add_options --enable-mochitest
 %else
 ac_add_options --disable-tests
 %endif
@@ -189,36 +177,26 @@ ac_add_options --disable-crashreporter
 #ac_add_options --disable-elf-dynstr-gc
 #ac_add_options --disable-elf-hack
 ac_add_options --disable-gnomeui
-ac_add_options --disable-gnomevfs
-ac_add_options --disable-installer
-ac_add_options --disable-javaxpcom
-ac_add_options --disable-profilesharing
 ac_add_options --disable-updater
-ac_add_options --disable-xterm-updates
 ac_add_options --enable-application=mail
-ac_add_options --enable-crypto
 ac_add_options --enable-default-toolkit=%{?with_gtk3:cairo-gtk3}%{!?with_gtk3:cairo-gtk2}
 ac_add_options --enable-gio
 %if %{with ldap}
 ac_add_options --enable-ldap
-ac_add_options --with-system-ldap
 %else
 ac_add_options --disable-ldap
 %endif
-ac_add_options --enable-libxul
-ac_add_options --enable-pango
-ac_add_options --enable-postscript
 %{?with_shared_js:ac_add_options --enable-shared-js}
-ac_add_options --enable-single-profile
 ac_add_options --enable-startup-notification
 ac_add_options --enable-system-cairo
+ac_add_options --enable-system-ffi
 ac_add_options --enable-system-hunspell
 ac_add_options --enable-system-sqlite
+ac_add_options --enable-url-classifier
 ac_add_options --with-default-mozilla-five-home=%{_libdir}/%{name}
 ac_add_options --with-distribution-id=org.pld-linux
 ac_add_options --with-pthreads
 ac_add_options --with-system-bz2
-ac_add_options --with-system-ffi
 ac_add_options --with%{!?with_system_icu:out}-system-icu
 ac_add_options --with-system-jpeg
 ac_add_options --with-system-libevent
@@ -227,18 +205,15 @@ ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-system-png
 ac_add_options --with-system-zlib
+ac_add_options --with-x
 EOF
 
 mkdir -p %{objdir}/config
 ln -sf %{topdir}/mozilla/config/*.mk %{objdir}/config
 
 %{__make} -j1 -f client.mk build \
-	STRIP="/bin/true" \
-	MOZ_MAKE_FLAGS="%{?_smp_mflags}" \
-	installdir=%{_libdir}/%{name} \
-	XLIBS="-lX11 -lXt" \
-	CC="%{__cc}" \
-	CXX="%{__cxx}"
+	AUTOCONF=/usr/bin/autoconf2_13 \
+	MOZ_MAKE_FLAGS="%{_smp_mflags}"
 
 %if %{with crashreporter}
 # create debuginfo for crash-stats.mozilla.com
@@ -332,6 +307,7 @@ rm -rf $HOME
 %endif
 %attr(755,root,root) %{_libdir}/%{name}/liblgpllibs.so
 %{?with_shared_js:%attr(755,root,root) %{_libdir}/%{name}/libmozjs.so}
+%attr(755,root,root) %{_libdir}/%{name}/libmozsandbox.so
 %attr(755,root,root) %{_libdir}/%{name}/libxul.so
 %attr(755,root,root) %{_libdir}/%{name}/*.sh
 %attr(755,root,root) %{_libdir}/%{name}/*-bin
@@ -343,6 +319,10 @@ rm -rf $HOME
 %{_libdir}/%{name}/dependentlibs.list
 %{_libdir}/%{name}/omni.ja
 %{_libdir}/%{name}/platform.ini
+%{!?with_system_icu:%{_libdir}/%{name}/icudt58l.dat}
+
+%dir %{_libdir}/%{name}/fonts
+%{_libdir}/%{name}/fonts/EmojiOneMozilla.ttf
 
 %if %{with crashreporter}
 %attr(755,root,root) %{_libdir}/%{name}/crashreporter
@@ -381,7 +361,6 @@ rm -rf $HOME
 %{_libdir}/%{name}/distribution/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/defaults
 %{_libdir}/%{name}/distribution/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/install.rdf
 %dir %{_libdir}/%{name}/distribution/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/components
-%attr(755,root,root) %{_libdir}/%{name}/distribution/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/components/*.so
 %{_libdir}/%{name}/distribution/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/components/*.js
 %{_libdir}/%{name}/distribution/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/components/*manifest
 %{_libdir}/%{name}/distribution/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}/components/*.xpt
