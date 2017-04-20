@@ -3,6 +3,7 @@
 # - fix startup crash "TypeError: a is null"
 #
 # Conditional builds
+%bcond_with	tests		# enable tests (whatever they check)
 %bcond_without	gtk3		# GTK+ 3.x instead of 2.x
 %bcond_without	ldap		# disable e-mail address lookups in LDAP directories
 %bcond_without	lightning	# disable Sunbird/Lightning calendar
@@ -15,8 +16,8 @@
 %undefine	crashreporter
 %endif
 
-%define		nspr_ver	4.10.6
-%define		nss_ver		3.19.2.1
+%define		nspr_ver	4.13.1
+%define		nss_ver		3.28.1
 
 # The actual sqlite version (see RHBZ#480989):
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
@@ -25,7 +26,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	52.0.1
-Release:	0.1
+Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -174,13 +175,17 @@ ac_add_options --enable-crashreporter
 %else
 ac_add_options --disable-crashreporter
 %endif
-#ac_add_options --disable-elf-dynstr-gc
 #ac_add_options --disable-elf-hack
+ac_add_options --disable-gconf
 ac_add_options --disable-gnomeui
+ac_add_options --disable-necko-wifi
 ac_add_options --disable-updater
+ac_add_options --enable-alsa
+ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-application=mail
 ac_add_options --enable-default-toolkit=%{?with_gtk3:cairo-gtk3}%{!?with_gtk3:cairo-gtk2}
 ac_add_options --enable-gio
+ac_add_options --enable-readline
 %if %{with ldap}
 ac_add_options --enable-ldap
 %else
