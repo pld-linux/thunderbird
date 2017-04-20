@@ -22,20 +22,4 @@ done
 
 THUNDERBIRD="$LIBDIR/thunderbird"
 
-if [ "$1" = "-remote" ]; then
-	exec $THUNDERBIRD "$@"
-else
-	PING=$($THUNDERBIRD -remote 'ping()' 2>&1 >/dev/null)
-	if [ -n "$PING" ]; then
-		exec $THUNDERBIRD "$@"
-	else
-		case "$1" in
-		-compose|-editor)
-			exec $THUNDERBIRD -remote 'xfeDoCommand (composeMessage)'
-			;;
-		*)
-			exec $THUNDERBIRD -remote 'xfeDoCommand (openInbox)'
-			;;
-		esac
-	fi
-fi
+exec $THUNDERBIRD "$@"
