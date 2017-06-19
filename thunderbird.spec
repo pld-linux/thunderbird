@@ -18,7 +18,7 @@
 %endif
 
 %define		nspr_ver	4.13.1
-%define		nss_ver		3.28.1
+%define		nss_ver		3.28.5
 
 # The actual sqlite version (see RHBZ#480989):
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
@@ -26,12 +26,12 @@
 Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
-Version:	52.1.1
+Version:	52.2.0
 Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
-# Source0-md5:	af4e6390883f3a3b082ecba7f85180b8
+# Source0-md5:	a9906e4951429cc4b0eb41587b90b443
 Source1:	%{name}.desktop
 Source2:	%{name}.sh
 Patch0:		prefs.patch
@@ -45,6 +45,7 @@ BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.10
 BuildRequires:	dbus-glib-devel >= 0.60
+BuildRequires:	fontconfig-devel >= 2.7.0
 BuildRequires:	freetype-devel >= 1:2.1.8
 BuildRequires:	glib2-devel >= 1:2.20
 BuildRequires:	gstreamer0.10-devel
@@ -54,6 +55,7 @@ BuildRequires:	gstreamer0.10-plugins-base-devel
 BuildRequires:	hunspell-devel
 BuildRequires:	libIDL-devel >= 0.8.0
 BuildRequires:	libevent-devel
+BuildRequires:	libffi-devel > 3.0.9
 %{?with_system_icu:BuildRequires:	libicu-devel >= 58.1}
 BuildRequires:	libiw-devel
 # requires libjpeg-turbo implementing at least libjpeg 6b API
@@ -61,17 +63,18 @@ BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
 BuildRequires:	libpng-devel >= 1.4.1
 BuildRequires:	libstdc++-devel
-BuildRequires:	libvpx-devel >= 1.3.0
+BuildRequires:	libvpx-devel >= 1.5.0
 BuildRequires:	mozldap-devel
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
 BuildRequires:	nss-devel >= 1:%{nss_ver}
 BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	perl-base >= 1:5.6
+BuildRequires:	pixman-devel >= 0.19.2
 BuildRequires:	pkgconfig
 BuildRequires:	python >= 1:2.5
 BuildRequires:	python-virtualenv
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel >= 3.8.4.2
+BuildRequires:	sqlite3-devel >= 3.17.0
 BuildRequires:	startup-notification-devel >= 0.8
 BuildRequires:	virtualenv
 BuildRequires:	xorg-lib-libXext-devel
@@ -82,7 +85,7 @@ BuildRequires:	zip
 Requires:	glib2 >= 1:2.20
 %{!?with_gtk3:Requires:	gtk+2 >= 2:2.18.0}
 %{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
-Requires:	libvpx >= 1.3.0
+Requires:	libvpx >= 1.5.0
 Requires:	myspell-common
 Requires:	nspr >= 1:%{nspr_ver}
 Requires:	nss >= 1:%{nss_ver}
