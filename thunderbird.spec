@@ -39,21 +39,17 @@ Patch1:		no-subshell.patch
 Patch2:		enable-addons.patch
 Patch3:		mozilla-1245783.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
-BuildRequires:	GConf2-devel >= 1.2.1
 BuildRequires:	alsa-lib-devel
-BuildRequires:	automake
+BuildRequires:	autoconf2_13 >= 2.13
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.10
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	fontconfig-devel >= 2.7.0
 BuildRequires:	freetype-devel >= 1:2.1.8
-BuildRequires:	glib2-devel >= 1:2.20
-BuildRequires:	gstreamer0.10-devel
-BuildRequires:	gstreamer0.10-plugins-base-devel
+BuildRequires:	glib2-devel >= 1:2.22
 %{!?with_gtk3:BuildRequires:	gtk+2-devel >= 2:2.18.0}
 %{?with_gtk3:BuildRequires:	gtk+3-devel >= 3.4.0}
 BuildRequires:	hunspell-devel
-BuildRequires:	libIDL-devel >= 0.8.0
 BuildRequires:	libevent-devel
 BuildRequires:	libffi-devel > 3.0.9
 %{?with_system_icu:BuildRequires:	libicu-devel >= 58.1}
@@ -61,7 +57,7 @@ BuildRequires:	libiw-devel
 # requires libjpeg-turbo implementing at least libjpeg 6b API
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
-BuildRequires:	libpng-devel >= 1.4.1
+BuildRequires:	libpng-devel >= 2:1.6.25
 BuildRequires:	libstdc++-devel
 BuildRequires:	libvpx-devel >= 1.5.0
 BuildRequires:	mozldap-devel
@@ -71,27 +67,36 @@ BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	perl-base >= 1:5.6
 BuildRequires:	pixman-devel >= 0.19.2
 BuildRequires:	pkgconfig
-BuildRequires:	python >= 1:2.5
+BuildRequires:	python >= 1:2.7
 BuildRequires:	python-virtualenv
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.17.0
 BuildRequires:	startup-notification-devel >= 0.8
 BuildRequires:	virtualenv
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXcomposite-devel
+BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
-BuildRequires:	xorg-lib-libXinerama-devel
+BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXt-devel
-BuildRequires:	yasm
+%ifarch %{ix86} %{x8664}
+BuildRequires:	yasm >= 1.0.1
+%endif
 BuildRequires:	zip
-Requires:	glib2 >= 1:2.20
+BuildRequires:	zlib-devel >= 1.2.3
+Requires(post):	mktemp >= 1.5-18
+Requires:	dbus-glib >= 0.60
+Requires:	glib2 >= 1:2.22
 %{!?with_gtk3:Requires:	gtk+2 >= 2:2.18.0}
 %{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
+Requires:	libpng >= 2:1.6.25
 Requires:	libvpx >= 1.5.0
 Requires:	myspell-common
 Requires:	nspr >= 1:%{nspr_ver}
 Requires:	nss >= 1:%{nss_ver}
 Requires:	pango >= 1:1.22.0
 Requires:	sqlite3 >= %{sqlite_build_version}
-Requires(post):	mktemp >= 1.5-18
+Requires:	startup-notification >= 0.8
 Requires:	libjpeg-turbo
 Obsoletes:	icedove
 Obsoletes:	mozilla-thunderbird
@@ -185,16 +190,17 @@ ac_add_options --disable-gnomeui
 ac_add_options --disable-necko-wifi
 ac_add_options --disable-updater
 ac_add_options --enable-alsa
-ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-application=mail
+ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-default-toolkit=%{?with_gtk3:cairo-gtk3}%{!?with_gtk3:cairo-gtk2}
 ac_add_options --enable-gio
-ac_add_options --enable-readline
 %if %{with ldap}
 ac_add_options --enable-ldap
 %else
 ac_add_options --disable-ldap
 %endif
+%{?with_official:ac_add_options --enable-official-branding}
+ac_add_options --enable-readline
 %{?with_shared_js:ac_add_options --enable-shared-js}
 ac_add_options --enable-startup-notification
 ac_add_options --enable-system-cairo
@@ -202,7 +208,6 @@ ac_add_options --enable-system-ffi
 ac_add_options --enable-system-hunspell
 ac_add_options --enable-system-sqlite
 ac_add_options --enable-url-classifier
-%{?with_official:ac_add_options --enable-official-branding}
 ac_add_options --with-default-mozilla-five-home=%{_libdir}/%{name}
 ac_add_options --with-distribution-id=org.pld-linux
 ac_add_options --with-pthreads
