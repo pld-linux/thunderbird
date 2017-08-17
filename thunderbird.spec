@@ -26,12 +26,12 @@
 Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
-Version:	52.2.1
+Version:	52.3.0
 Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
-# Source0-md5:	df6ddc52046acd66503756c094c30e21
+# Source0-md5:	5841ee1a70423b9385110c82b78bef47
 Source1:	%{name}.desktop
 Source2:	%{name}.sh
 Patch0:		prefs.patch
