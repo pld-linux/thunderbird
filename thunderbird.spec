@@ -51,6 +51,7 @@ BuildRequires:	glib2-devel >= 1:2.22
 %{!?with_gtk3:BuildRequires:	gtk+2-devel >= 2:2.18.0}
 %{?with_gtk3:BuildRequires:	gtk+3-devel >= 3.4.0}
 BuildRequires:	hunspell-devel
+BuildRequires:	libatomic-devel
 BuildRequires:	libevent-devel
 BuildRequires:	libffi-devel > 3.0.9
 %{?with_system_icu:BuildRequires:	libicu-devel >= 58.1}
