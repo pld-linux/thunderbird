@@ -12,7 +12,7 @@
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_with	system_icu	# build with system ICU (disabled due to crashes with system icu 58.2)
-%bcond_with	clang		# build using Clang/LLVM
+%bcond_without	clang		# build using Clang/LLVM
 
 %if 0%{?_enable_debug_packages} != 1
 %undefine	crashreporter
