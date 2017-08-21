@@ -44,6 +44,7 @@ BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf2_13 >= 2.13
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.10
+%{?with_clang:BuildRequires:	clang}
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	fontconfig-devel >= 2.7.0
 BuildRequires:	freetype-devel >= 1:2.1.8
