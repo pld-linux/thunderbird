@@ -37,7 +37,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	52.3.0
-Release:	2
+Release:	3
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -1362,6 +1362,13 @@ done
 rm -rf $RPM_BUILD_ROOT
 
 %pretrans
+if [ -d %{_libdir}/%{name}/extensions ] && [ ! -L %{_libdir}/%{name}/extensions ]; then
+	install -d %{_datadir}/%{name}
+	if [ -e %{_datadir}/%{name}/extensions ]; then
+		mv %{_datadir}/%{name}/extensions{,.rpmsave}
+	fi
+	mv -v %{_libdir}/%{name}/extensions %{_datadir}/%{name}/extensions
+fi
 if [ -d %{_libdir}/%{name}/dictionaries ] && [ ! -L %{_libdir}/%{name}/dictionaries ]; then
 	mv -v %{_libdir}/%{name}/dictionaries{,.rpmsave}
 fi
