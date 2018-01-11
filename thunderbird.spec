@@ -1232,7 +1232,7 @@ ac_add_options --enable-debugger-info-modules
 ac_add_options --enable-crash-on-assert
 %else
 ac_add_options --disable-debug
-ac_add_options --enable-optimize="%{rpmcflags} -Os"
+ac_add_options --enable-optimize="%{rpmcflags}"
 %endif
 ac_add_options --disable-strip
 ac_add_options --disable-install-strip
