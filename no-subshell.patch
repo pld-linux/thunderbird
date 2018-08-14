@@ -1,5 +1,5 @@
---- iceweasel-3.0.10/mozilla/build/unix/run-mozilla.sh~	2007-09-04 20:09:31.000000000 +0300
-+++ iceweasel-3.0.10/mozilla/build/unix/run-mozilla.sh	2009-05-05 19:20:55.718561642 +0300
+--- iceweasel-3.0.10/build/unix/run-mozilla.sh~	2007-09-04 20:09:31.000000000 +0300
++++ iceweasel-3.0.10/build/unix/run-mozilla.sh	2009-05-05 19:20:55.718561642 +0300
 @@ -438,7 +438,8 @@
  then
  	moz_debug_program ${1+"$@"}
@@ -10,8 +10,8 @@
  fi
  
  exit $exitcode
---- iceweasel-3.0.10/mozilla/build/unix/mozilla.in~	2007-10-05 10:29:26.000000000 +0300
-+++ iceweasel-3.0.10/mozilla/build/unix/mozilla.in	2009-05-05 19:26:08.278322082 +0300
+--- iceweasel-3.0.10/build/unix/mozilla.in~	2007-10-05 10:29:26.000000000 +0300
++++ iceweasel-3.0.10/build/unix/mozilla.in	2009-05-05 19:26:08.278322082 +0300
 @@ -135,6 +135,9 @@
  if [ $debugging = 1 ]
  then
