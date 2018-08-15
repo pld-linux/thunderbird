@@ -8,6 +8,7 @@
 %bcond_without	lightning	# disable Sunbird/Lightning calendar
 %bcond_without	official	# official Thunderbird branding
 %bcond_with	crashreporter	# report crashes to crash-stats.mozilla.com
+%bcond_without	gold		# use default linker instead of gold
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
@@ -166,6 +167,7 @@ Patch2:		enable-addons.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf2_13 >= 2.13
+%{?with_gold:BuildRequires:	binutils >= 3:2.20.51.0.7}
 BuildRequires:	bzip2-devel
 %{?with_system_cairo:BuildRequires:	cairo-devel >= 1.10.2-5}
 BuildRequires:	cargo
@@ -1313,6 +1315,7 @@ ac_add_options --enable-ldap
 ac_add_options --disable-ldap
 %endif
 %{?with_official:ac_add_options --enable-official-branding}
+%{?with_gold:ac_add_options --enable-linker=gold}
 ac_add_options --enable-readline
 %{?with_shared_js:ac_add_options --enable-shared-js}
 ac_add_options --enable-startup-notification
