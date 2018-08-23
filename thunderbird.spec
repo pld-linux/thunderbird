@@ -1287,7 +1287,6 @@ ac_add_options --disable-strip
 ac_add_options --disable-install-strip
 %if %{with tests}
 ac_add_options --enable-tests
-ac_add_options --enable-mochitest
 %else
 ac_add_options --disable-tests
 %endif
