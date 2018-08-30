@@ -1,0 +1,566 @@
+
+# HG changeset patch
+# User Arkadiusz Miskiewicz <arekm@maven.pl>
+# Date 1535035719 -7200
+# Node ID 74ed2e4ba2456c97a4266b4c58faf4bf24b4d21e
+# Parent  3d2c10e918d29353b29506c635c26e2e5f3cd2bb
+Bug 678322 - process all duplicate headers when searching. r=jorgk
+
+Search in all headers even if header with the same name occured multiple times.
+Stop treating Received in special way as now it's not needed - we will search
+all Received occurences (just like any other header) now.
+
+Add tests for for the problem.
+
+diff --git a/mailnews/base/search/src/nsMsgSearchTerm.cpp b/mailnews/base/search/src/nsMsgSearchTerm.cpp
+--- a/mailnews/base/search/src/nsMsgSearchTerm.cpp
++++ b/mailnews/base/search/src/nsMsgSearchTerm.cpp
+@@ -736,127 +736,129 @@ nsresult nsMsgSearchTerm::DeStreamNew (c
+     CopyUTF8toUTF16(mozilla::MakeStringSpan(m_value.string), m_value.utf16String);
+   }
+   return NS_OK;
+ }
+ 
+ 
+ // Looks in the MessageDB for the user specified arbitrary header, if it finds the header, it then looks for a match against
+ // the value for the header.
+-nsresult nsMsgSearchTerm::MatchArbitraryHeader (nsIMsgSearchScopeTerm *scope,
+-                                                uint32_t length /* in lines*/,
+-                                                const char *charset,
+-                                                bool charsetOverride,
+-                                                nsIMsgDBHdr *msg,
+-                                                nsIMsgDatabase* db,
+-                                                const char * headers,
+-                                                uint32_t headersSize,
+-                                                bool ForFiltering,
+-                                                bool *pResult)
++nsresult nsMsgSearchTerm::MatchArbitraryHeader(nsIMsgSearchScopeTerm *scope,
++                                               uint32_t length /* in lines*/,
++                                               const char *charset,
++                                               bool charsetOverride,
++                                               nsIMsgDBHdr *msg,
++                                               nsIMsgDatabase* db,
++                                               const char * headers,
++                                               uint32_t headersSize,
++                                               bool ForFiltering,
++                                               bool *pResult)
+ {
+   NS_ENSURE_ARG_POINTER(pResult);
+ 
+   *pResult = false;
+   nsresult rv = NS_OK;
+   bool matchExpected = m_operator == nsMsgSearchOp::Contains ||
+                        m_operator == nsMsgSearchOp::Is ||
+                        m_operator == nsMsgSearchOp::BeginsWith ||
+                        m_operator == nsMsgSearchOp::EndsWith;
+-  // init result to what we want if we don't find the header at all
++  // Initialize result to what we want if we don't find the header at all.
+   bool result = !matchExpected;
+ 
+   nsCString dbHdrValue;
+   msg->GetStringProperty(m_arbitraryHeader.get(), getter_Copies(dbHdrValue));
+-  if (!dbHdrValue.IsEmpty())
+-    // match value with the other info.
+-    return MatchRfc2047String(dbHdrValue, charset, charsetOverride, pResult);
++  if (!dbHdrValue.IsEmpty()) {
++    // Match value with the other info. It doesn't check all header occurences,
++    // so we use it only if we match and do line by line headers parsing otherwise.
++    rv = MatchRfc2047String(dbHdrValue, charset, charsetOverride, pResult);
++    if (*pResult)
++      return rv;
+ 
+-  nsMsgBodyHandler * bodyHandler =
+-    new nsMsgBodyHandler (scope, length, msg, db, headers, headersSize,
+-                          ForFiltering);
+-  NS_ENSURE_TRUE(bodyHandler, NS_ERROR_OUT_OF_MEMORY);
++    rv = NS_OK;
++  }
+ 
++  nsMsgBodyHandler *bodyHandler = new nsMsgBodyHandler(scope, length, msg, db,
++                                                       headers, headersSize,
++                                                       ForFiltering);
+   bodyHandler->SetStripHeaders (false);
+ 
+-  nsCString headerFullValue; // contains matched header value accumulated over multiple lines.
++  nsCString headerFullValue;  // Contains matched header value accumulated over multiple lines.
+   nsAutoCString buf;
+   nsAutoCString curMsgHeader;
+-  bool searchingHeaders = true;
++  bool processingHeaders = true;
+ 
+-  // We will allow accumulation of received headers;
+-  bool isReceivedHeader = m_arbitraryHeader.EqualsLiteral("received");
+-
+-  while (searchingHeaders)
++  while (processingHeaders)
+   {
+     nsCString charsetIgnored;
+     if (bodyHandler->GetNextLine(buf, charsetIgnored) < 0 || EMPTY_MESSAGE_LINE(buf))
+-      searchingHeaders = false;
+-    bool isContinuationHeader = searchingHeaders ?
++      processingHeaders = false;  // No more lines or emtpy line teminating headers.
++
++    bool isContinuationHeader = processingHeaders ?
+       NS_IsAsciiWhitespace(buf.CharAt(0)) : false;
+ 
+-    // We try to match the header from the last time through the loop, which should now
+-    //  have accumulated over possible multiple lines. For all headers except received,
+-    //  we process a single accumulation, but process accumulated received at the end.
+-    if (!searchingHeaders || (!isContinuationHeader &&
+-         (!headerFullValue.IsEmpty() && !isReceivedHeader)))
++    // If we're not on a continuation header the header value is not empty,
++    // we have finished accumulating the header value by iterating over all
++    // header lines. Now we need to check whether the value is a match.
++    if (!isContinuationHeader && !headerFullValue.IsEmpty())
+     {
+-      // Make sure buf has info besides just the header.
+-      // Otherwise, it's either an empty header, or header not found.
+-      if (!headerFullValue.IsEmpty())
++      bool stringMatches;
++      // Match value with the other info.
++      rv = MatchRfc2047String(headerFullValue, charset, charsetOverride, &stringMatches);
++      if (matchExpected == stringMatches) // if we found a match
+       {
+-        bool stringMatches;
+-        // match value with the other info.
+-        rv = MatchRfc2047String(headerFullValue, charset, charsetOverride, &stringMatches);
+-        if (matchExpected == stringMatches) // if we found a match
+-        {
+-          searchingHeaders = false;   // then stop examining the headers
+-          result = stringMatches;
+-        }
++        // If we found a match, stop examining the headers.
++        processingHeaders = false;
++        result = stringMatches;
+       }
++      // Prepare for repeated header of the same type.
++      headerFullValue.Truncate();
++    }
++
++    // We got result or finished processing all lines.
++    if (!processingHeaders)
+       break;
+-    }
+ 
+     char * buf_end = (char *) (buf.get() + buf.Length());
+     int headerLength = m_arbitraryHeader.Length();
+ 
+     // If the line starts with whitespace, then we use the current header.
+     if (!isContinuationHeader)
+     {
+-      // here we start a new header
++      // Here we start a new header.
+       uint32_t colonPos = buf.FindChar(':');
+       curMsgHeader = StringHead(buf, colonPos);
+     }
+ 
+     if (curMsgHeader.Equals(m_arbitraryHeader, nsCaseInsensitiveCStringComparator()))
+     {
+-      // process the value
+-      // value occurs after the header name or whitespace continuation char.
+-      const char * headerValue = buf.get() + (isContinuationHeader ? 1 : headerLength);
++      // Process the value:
++      // Value occurs after the header name or whitespace continuation char.
++      const char *headerValue = buf.get() + (isContinuationHeader ? 1 : headerLength);
+       if (headerValue < buf_end && headerValue[0] == ':')  // + 1 to account for the colon which is MANDATORY
+         headerValue++;
+ 
+-      // strip leading white space
++      // Strip leading white space.
+       while (headerValue < buf_end && isspace(*headerValue))
+-        headerValue++; // advance to next character
++        headerValue++;
+ 
+-      // strip trailing white space
++      // Strip trailing white space.
+       char * end = buf_end - 1;
+-      while (end > headerValue && isspace(*end)) // while we haven't gone back past the start and we are white space....
++      while (headerValue < end && isspace(*end))
+       {
+-        *end = '\0';  // eat up the white space
+-        end--;      // move back and examine the previous character....
++        *end = '\0';
++        end--;
+       }
+ 
+-      // any continuation whitespace is converted to a single space. This includes both a continuation line, or a
+-      //  second value of the same header (eg the received header)
++      // Any continuation whitespace is converted to a single space.
+       if (!headerFullValue.IsEmpty())
+         headerFullValue.Append(' ');
+       headerFullValue.Append(nsDependentCString(headerValue));
+     }
+   }
++
+   delete bodyHandler;
+   *pResult = result;
+   return rv;
+ }
+ 
+ NS_IMETHODIMP nsMsgSearchTerm::MatchHdrProperty(nsIMsgDBHdr *aHdr, bool *aResult)
+ {
+   NS_ENSURE_ARG_POINTER(aResult);
+diff --git a/mailnews/base/test/unit/test_search.js b/mailnews/base/test/unit/test_search.js
+--- a/mailnews/base/test/unit/test_search.js
++++ b/mailnews/base/test/unit/test_search.js
+@@ -104,16 +104,110 @@ var Tests =
+     testAttribute: OtherHeader,
+     op: Contains,
+     count: 1},
+   { testString: "foobar",
+     testAttribute: OtherHeader,
+     op: Contains,
+     count: 0},
+ 
++  // test header with multiple occurences
++  { testString: "one value",
++    testAttribute: OtherHeader,
++    op: Is,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "second",
++    testAttribute: OtherHeader,
++    op: Is,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "third value for test purposes",
++    testAttribute: OtherHeader,
++    op: Is,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "multiline value that needs to be handled.",
++    testAttribute: OtherHeader,
++    op: Is,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++
++  { testString: "one",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "second",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "purposes",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "value",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "that needs to be",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "fifth",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++    { testString: "is the end my",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "the end",
++    testAttribute: OtherHeader,
++    op: EndsWith,
++    customHeader: "X-Duplicated-Header",
++    count: 0},
++  { testString: "handled.",
++    testAttribute: OtherHeader,
++    op: EndsWith,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "one value",
++    testAttribute: OtherHeader,
++    op: EndsWith,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "third",
++    testAttribute: OtherHeader,
++    op: BeginsWith,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++  { testString: "This is",
++    testAttribute: OtherHeader,
++    op: BeginsWith,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++
++  { testString: "nothing",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "X-Duplicated-Header",
++    count: 0},
++  { testString: "nothing",
++    testAttribute: OtherHeader,
++    op: DoesntContain,
++    customHeader: "X-Duplicated-Header",
++    count: 1},
++
+   // test accumulation of received header
+   // only in first received
+   { testString: "caspiaco",
+     testAttribute: OtherHeader,
+     op: Contains,
+     customHeader: "Received",
+     count: 1},
+   // only in second
+@@ -123,16 +217,22 @@ var Tests =
+     customHeader: "received",
+     count: 1},
+   // in neither
+   { testString: "not there",
+     testAttribute: OtherHeader,
+     op: Contains,
+     customHeader: "received",
+     count: 0},
++  // not on first line of received
++  { testString: "m47LtAFJ007547",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "received",
++    count: 1},
+ 
+   // test multiple line arbitrary headers
+   // in the first line
+   { testString: "SpamAssassin 3.2.3",
+     testAttribute: OtherHeader,
+     op: Contains,
+     customHeader: "X-Spam-Checker-Version",
+     count: 1},
+diff --git a/mailnews/test/data/bugmail12 b/mailnews/test/data/bugmail12
+--- a/mailnews/test/data/bugmail12
++++ b/mailnews/test/data/bugmail12
+@@ -49,16 +49,28 @@ X-Bugzilla-Component: MailNews: Filters
+ X-Bugzilla-Keywords: 
+ X-Bugzilla-Severity: enhancement
+ X-Bugzilla-Who: bugmail@example.org
+ X-Bugzilla-Status: NEW
+ X-Bugzilla-Priority: --
+ X-Bugzilla-Assigned-To: nobody@mozilla.org
+ X-Bugzilla-Target-Milestone: ---
+ X-Bugzilla-Changed-Fields: Blocks
++X-Duplicated-Header: one value
++X-Duplicated-Header: second
++X-Duplicated-Header: third value for test purposes
++X-Duplicated-Header: multiline value  
++       that needs to be   
++       handled.
++X-Duplicated-Header: here comes a continuation line
++ that contains the word 'fifth' we're looking for  
++ and then another one
++X-Duplicated-Header: This is
++   the end
++      my friend
+ In-Reply-To: <bug-397009-254728@https.bugzilla.mozilla.org/>
+ References: <bug-397009-254728@https.bugzilla.mozilla.org/>
+ X-Priority: 4
+ Content-Type: text/plain; charset="UTF-8"
+ MIME-Version: 1.0
+ X-user: ::::63.245.208.146:host29.hostmonster.com::::::
+ DomainKey-Status: no signature
+ 
+
+
+# HG changeset patch
+# User Arkadiusz Miskiewicz <arekm@maven.pl>
+# Date 1535318767 -7200
+# Node ID 9289d8a37eb2dae82f2ecc0076ec8396126a5526
+# Parent  ce828f6cf25697596ec928ee99dfc07bdf0ce006
+Bug 678322 - Follow-up: fix logic error and cater for IMAP case where headers are not available. r=jorgk
+
+diff --git a/mailnews/base/search/src/nsMsgSearchTerm.cpp b/mailnews/base/search/src/nsMsgSearchTerm.cpp
+--- a/mailnews/base/search/src/nsMsgSearchTerm.cpp
++++ b/mailnews/base/search/src/nsMsgSearchTerm.cpp
+@@ -764,20 +764,21 @@ nsresult nsMsgSearchTerm::MatchArbitrary
+   bool result = !matchExpected;
+ 
+   nsCString dbHdrValue;
+   msg->GetStringProperty(m_arbitraryHeader.get(), getter_Copies(dbHdrValue));
+   if (!dbHdrValue.IsEmpty()) {
+     // Match value with the other info. It doesn't check all header occurences,
+     // so we use it only if we match and do line by line headers parsing otherwise.
+     rv = MatchRfc2047String(dbHdrValue, charset, charsetOverride, pResult);
+-    if (*pResult)
++    if (matchExpected == *pResult)
+       return rv;
+ 
+-    rv = NS_OK;
++    // Preset result in case we don't have access to the headers, like for IMAP.
++    result = *pResult;
+   }
+ 
+   nsMsgBodyHandler *bodyHandler = new nsMsgBodyHandler(scope, length, msg, db,
+                                                        headers, headersSize,
+                                                        ForFiltering);
+   bodyHandler->SetStripHeaders (false);
+ 
+   nsCString headerFullValue;  // Contains matched header value accumulated over multiple lines.
+
+
+# HG changeset patch
+# User Arkadiusz Miskiewicz <arekm@maven.pl>
+# Date 1535451947 -7200
+# Node ID a09a76a92abfcfa36c00727cef84293175ade116
+# Parent  ff6f03d6611e158e2d8e951d9fed621dfd90821f
+Bug 678322 - Follow-up: more tests including matching based on message string properties. r=jorgk
+
+nsMsgSearchTerm::MatchArbitraryHeader() can do matching using message string
+properties and by matching headers line by line.
+
+test_search.js was only testing second case for duplicated headers. Now we also test
+first case. Also added more tests for second case.
+
+diff --git a/mailnews/base/test/unit/test_search.js b/mailnews/base/test/unit/test_search.js
+--- a/mailnews/base/test/unit/test_search.js
++++ b/mailnews/base/test/unit/test_search.js
+@@ -125,16 +125,36 @@ var Tests =
+     op: Is,
+     customHeader: "X-Duplicated-Header",
+     count: 1},
+   { testString: "multiline value that needs to be handled.",
+     testAttribute: OtherHeader,
+     op: Is,
+     customHeader: "X-Duplicated-Header",
+     count: 1},
++  { testString: "one value",
++    testAttribute: OtherHeader,
++    op: Isnt,
++    customHeader: "X-Duplicated-Header",
++    count: 0},
++  { testString: "second",
++    testAttribute: OtherHeader,
++    op: Isnt,
++    customHeader: "X-Duplicated-Header",
++    count: 0},
++  { testString: "third value for test purposes",
++    testAttribute: OtherHeader,
++    op: Isnt,
++    customHeader: "X-Duplicated-Header",
++    count: 0},
++  { testString: "multiline value that needs to be handled.",
++    testAttribute: OtherHeader,
++    op: Isnt,
++    customHeader: "X-Duplicated-Header",
++    count: 0},
+ 
+   { testString: "one",
+     testAttribute: OtherHeader,
+     op: Contains,
+     customHeader: "X-Duplicated-Header",
+     count: 1},
+   { testString: "second",
+     testAttribute: OtherHeader,
+@@ -198,16 +218,57 @@ var Tests =
+     customHeader: "X-Duplicated-Header",
+     count: 0},
+   { testString: "nothing",
+     testAttribute: OtherHeader,
+     op: DoesntContain,
+     customHeader: "X-Duplicated-Header",
+     count: 1},
+ 
++  { testString: "this header tests DB string properties",
++    testAttribute: OtherHeader,
++    op: Is,
++    customHeader: "X-Duplicated-Header-DB",
++    count: 1},
++  { testString: "which can be handled",
++    testAttribute: OtherHeader,
++    op: Is,
++    customHeader: "X-Duplicated-Header-DB",
++    count: 1},
++  { testString: "differently than X-Duplicated-Header, so better test it",
++    testAttribute: OtherHeader,
++    op: Is,
++    customHeader: "X-Duplicated-Header-DB",
++    count: 1},
++  { testString: "this header tests DB string properties",
++    testAttribute: OtherHeader,
++    op: Isnt,
++    customHeader: "X-Duplicated-Header-DB",
++    count: 0},
++  { testString: "which can be handled",
++    testAttribute: OtherHeader,
++    op: Isnt,
++    customHeader: "X-Duplicated-Header-DB",
++    count: 0},
++  { testString: "differently than X-Duplicated-Header, so better test it",
++    testAttribute: OtherHeader,
++    op: Isnt,
++    customHeader: "X-Duplicated-Header-DB",
++    count: 0},
++  { testString: "than X-Duplicated-Header,",
++    testAttribute: OtherHeader,
++    op: Contains,
++    customHeader: "X-Duplicated-Header-DB",
++    count: 1},
++  { testString: "than X-Duplicated-Header, so",
++    testAttribute: OtherHeader,
++    op: DoesntContain,
++    customHeader: "X-Duplicated-Header-DB",
++    count: 0},
++
+   // test accumulation of received header
+   // only in first received
+   { testString: "caspiaco",
+     testAttribute: OtherHeader,
+     op: Contains,
+     customHeader: "Received",
+     count: 1},
+   // only in second
+@@ -372,17 +433,17 @@ function run_test()
+     OnProgress: function(aProgress, aProgressMax) {},
+     SetMessageKey: function(aKey) {},
+     SetMessageId: function(aMessageId) {},
+     OnStopCopy: function(aStatus) { testSearch();}
+   };
+ 
+   // set value of headers we want parsed into the db
+   Services.prefs.setCharPref("mailnews.customDBHeaders",
+-                             "oneLiner twoLiner threeLiner noSpace withSpace");
++          "oneLiner twoLiner threeLiner noSpace withSpace X-Duplicated-Header-DB");
+   // Get a message into the local filestore. function testSearch() continues
+   // the testing after the copy.
+   var bugmail12 = do_get_file("../../../data/bugmail12");
+   do_test_pending();
+   MailServices.copy.CopyFileMessage(bugmail12, localAccountUtils.inboxFolder, null,
+                                     false, 0, "", copyListener, null);
+ }
+ 
+diff --git a/mailnews/test/data/bugmail12 b/mailnews/test/data/bugmail12
+--- a/mailnews/test/data/bugmail12
++++ b/mailnews/test/data/bugmail12
+@@ -61,16 +61,22 @@ X-Duplicated-Header: multiline value
+        that needs to be   
+        handled.
+ X-Duplicated-Header: here comes a continuation line
+  that contains the word 'fifth' we're looking for  
+  and then another one
+ X-Duplicated-Header: This is
+    the end
+       my friend
++X-Duplicated-Header-DB: this header  
++   tests DB   
++      string properties
++X-Duplicated-Header-DB: which can be handled
++X-Duplicated-Header-DB: differently than
++   X-Duplicated-Header, so better test it
+ In-Reply-To: <bug-397009-254728@https.bugzilla.mozilla.org/>
+ References: <bug-397009-254728@https.bugzilla.mozilla.org/>
+ X-Priority: 4
+ Content-Type: text/plain; charset="UTF-8"
+ MIME-Version: 1.0
+ X-user: ::::63.245.208.146:host29.hostmonster.com::::::
+ DomainKey-Status: no signature
+ 
+

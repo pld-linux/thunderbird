@@ -38,7 +38,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	60.0
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -164,6 +164,7 @@ Source157:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{ve
 Patch0:		prefs.patch
 Patch1:		no-subshell.patch
 Patch2:		enable-addons.patch
+Patch3:		bug-678322.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf2_13 >= 2.13
@@ -1250,6 +1251,8 @@ unpack() {
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
+cd comm
+%patch3 -p1
 
 %build
 cp -p %{_datadir}/automake/config.* build/autoconf
