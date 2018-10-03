@@ -37,134 +37,135 @@ curl -s $U | sed -ne 's,.*href="\([^"]\+\)/".*,'"$U"'xpi/\1.xpi,p'
 Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
-Version:	60.0
-Release:	2
+Version:	60.2.1
+Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
-# Source0-md5:	aaba788a2eb99e0bac317047ebe61b45
+# Source0-md5:	821a046777c9874990820c785154a701
 Source1:	%{name}.desktop
 Source2:	%{name}.sh
 Source100:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ar.xpi
-# Source100-md5:	de5fb60589a725bfc4040ad2c1921038
+# Source100-md5:	0d3f75eeee9a94cd49f22c86b3d345c7
 Source101:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ast.xpi
-# Source101-md5:	8f19123b51ccc8c1e4f8317490cebf67
+# Source101-md5:	45647cbcfb28ca61f635562553b0d87c
 Source102:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/be.xpi
-# Source102-md5:	0b9631e7039437132e42ffa0fd791b62
+# Source102-md5:	2a46ec1cc52232cc83a79d89adae4ba8
 Source103:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/bg.xpi
-# Source103-md5:	2cb2587201f717dfb352732a8537c5b5
+# Source103-md5:	20e9c0f4695651f5a67f48efefacc26f
 Source104:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/br.xpi
-# Source104-md5:	b46abe694c40cc055341a81687daa60f
+# Source104-md5:	fb13f6ce837f13c49bc11c90f0cc466d
 Source105:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ca.xpi
-# Source105-md5:	06f4949fc9dd41367720a28c26dc9372
+# Source105-md5:	1fe259155b0618746a52b10ad3a554b0
 Source106:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/cs.xpi
-# Source106-md5:	495485523d190de80c8fd485077b51fc
+# Source106-md5:	c723fd741f4168602f6eaf9e7cdc3f88
 Source107:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/cy.xpi
-# Source107-md5:	a83c26d480c8a659b564f986428eee53
+# Source107-md5:	ae56c2a334910438a2a2d53448ede820
 Source108:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/da.xpi
-# Source108-md5:	5e6aadf20f55b785c535389793534bf3
+# Source108-md5:	c5134543d22310db615909fce0a1ebb6
 Source109:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/de.xpi
-# Source109-md5:	e21a5906301b39e4a5ed575d0b2dcc9b
+# Source109-md5:	edf5c9ce180c6d32eb2eef8482c47032
 Source110:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/dsb.xpi
-# Source110-md5:	218cb863e515d6a843588476b59fbcae
+# Source110-md5:	99a22acb97f261a51a8b98d5d417df91
 Source111:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/el.xpi
-# Source111-md5:	9035cb4f6fc317a3ca54fc342955e4f9
+# Source111-md5:	19e84ea821e3748a2cbf494d4af2c51a
 Source112:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/en-GB.xpi
-# Source112-md5:	bb5667de2553c0bd8689c8e99d54e634
+# Source112-md5:	36f8807f1cfe5a6ad6716711d61d1d19
 Source113:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/en-US.xpi
-# Source113-md5:	f85ac1b2f7bd064cdce4e8f2cd40349b
+# Source113-md5:	297b53441e4b3b774819a910c18fe675
 Source114:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/es-AR.xpi
-# Source114-md5:	e68c79bbbc38c26670a06fe9e3e8f53f
+# Source114-md5:	4ba7d1e18e2cec1de9dba290c5e8b0a5
 Source115:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/es-ES.xpi
-# Source115-md5:	be9c7cdd69390b44eaae4b6ed7a1d7c4
+# Source115-md5:	0bd53361ff8a0440e8c75273f1ff541d
 Source116:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/et.xpi
-# Source116-md5:	7b952ab40b3dead8f34edb443b45ef7a
+# Source116-md5:	94d1732902266f8159a9bffe64c398b7
 Source117:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/eu.xpi
-# Source117-md5:	1d423465f9fe99e2c4f9a8dbb0a43120
+# Source117-md5:	b8bd9e2b30deeeb56f6f6cd20673711d
 Source118:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/fi.xpi
-# Source118-md5:	b55ab241b6dcf7f5010d1658cb3eb967
+# Source118-md5:	a3c96699f00811a84bb57c9a23884730
 Source119:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/fr.xpi
-# Source119-md5:	f7000dba1355f73fb0a3d2bb18be40ff
+# Source119-md5:	0c27b54bdc7d9aabd53a17be765974d2
 Source120:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/fy-NL.xpi
-# Source120-md5:	9e1a98fc15ad50785197da4f3165076a
+# Source120-md5:	5fe2480b49218739a9f52cb8ccfefc17
 Source121:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ga-IE.xpi
-# Source121-md5:	51f7c304c28eb7b4e499912544614599
+# Source121-md5:	131fd1aaba1298f9f8cac34f2efeb735
 Source122:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/gd.xpi
-# Source122-md5:	cec516d3d746707d0eacc8bb72b1605d
+# Source122-md5:	98f6d073e11151169b23415ddd24c5bd
 Source123:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/gl.xpi
-# Source123-md5:	3105ce333fd83a2fd30617fe34ed82d3
+# Source123-md5:	09c14082a44f517c9cddbdd7fb3b4892
 Source124:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/he.xpi
-# Source124-md5:	31db59fa27d12a5651b8e5c4060765b5
+# Source124-md5:	536df6e4fd35324f644a03b923d79b69
 Source125:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/hr.xpi
-# Source125-md5:	173c71c470fd6ff2f9fb4750a4198419
+# Source125-md5:	9f54702ae64bea7f8e947055bf987cd5
 Source126:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/hsb.xpi
-# Source126-md5:	b85e1b38174750f8d2abb710d4960c0e
+# Source126-md5:	96d13b939ddf9db9932585a602db8898
 Source127:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/hu.xpi
-# Source127-md5:	fe90e9feaf4deb7c1a424f9a6f2f6da1
+# Source127-md5:	9fcde632a1b3f8de6ffbcbe8775ca6a3
 Source128:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/hy-AM.xpi
-# Source128-md5:	6cd72d4a95d5bf05c8f68ca227a2946f
+# Source128-md5:	e241527bf6b2932c510290024dfaebe6
 Source129:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/id.xpi
-# Source129-md5:	99485a89a9ff92fab71e60507bf6193d
+# Source129-md5:	ef53e7cec11f49f2ce551bb0d2270214
 Source130:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/is.xpi
-# Source130-md5:	aad635b1bc2c06d38ae3a517552f9de1
+# Source130-md5:	b90a51e6fa3ff5e3e42ae16f8d0efcd2
 Source131:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/it.xpi
-# Source131-md5:	1583829631695788339c55499a502ea5
+# Source131-md5:	166ad245d295ab6879258c2718ce4e5d
 Source132:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ja.xpi
-# Source132-md5:	e1be8204c7fa76c002d200d89069fb3f
+# Source132-md5:	2f3c6e0ec6c22e8652a23a7c4e2cf6a8
 Source133:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/kab.xpi
-# Source133-md5:	31e494aa0eb92fbe40ee18705baebade
+# Source133-md5:	9ae4432713d17cd4773f96ae69038532
 Source134:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/kk.xpi
-# Source134-md5:	8bdcbba85fd6af876cdde313e17f4f94
+# Source134-md5:	3be7a6b10dac8b67ab902d40ee005ad0
 Source135:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ko.xpi
-# Source135-md5:	0dcc993a957c19281524dd581fa3d5b1
+# Source135-md5:	912724358f6f51e0df4d55f1ccad66e5
 Source136:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/lt.xpi
-# Source136-md5:	91139ddd654771124a039d4ff0615b1b
+# Source136-md5:	f9ffd6b5dbf64c3ce008028ea7a54e95
 Source137:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ms.xpi
-# Source137-md5:	76d8fbf4143906cd2ee6e014319b673a
+# Source137-md5:	ddd013901f59de2e6c28c34157635e48
 Source138:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/nb-NO.xpi
-# Source138-md5:	ab1b4e5a89385172db65a0b2747ede6a
+# Source138-md5:	9754f40bbae1585ad430cc244ef76552
 Source139:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/nl.xpi
-# Source139-md5:	59c3a9986c0ca4a18ff1599fdc4b3aa0
+# Source139-md5:	57a1a7e778b2752900ccd83c8efdadc1
 Source140:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/nn-NO.xpi
-# Source140-md5:	986c9c70930df0a494257648a1055e3f
+# Source140-md5:	27a3597bdd8afeb1571a64068839c338
 Source141:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/pl.xpi
-# Source141-md5:	4ba1887b35b423b1a7bd7d84b2dd34d2
+# Source141-md5:	a1c31b2d34258d34066686da7f366935
 Source142:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/pt-BR.xpi
-# Source142-md5:	25ccae83edc3b782182ecc4f052e543a
+# Source142-md5:	e020e846c42f23cdcd579f1ca6bfa840
 Source143:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/pt-PT.xpi
-# Source143-md5:	f2167fc54d9474e95970835bafe80d5b
+# Source143-md5:	60e6c875d7c5225e322d46c081827fb6
 Source144:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/rm.xpi
-# Source144-md5:	5a7edde60450e7f718ee9fe5bd0cd692
+# Source144-md5:	50b1241feec71d2bf487af85a5003d96
 Source145:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ro.xpi
-# Source145-md5:	58c885fc5c3dcfd3973311a28dd3d928
+# Source145-md5:	2b949caddec8141a043e211ffd2272ba
 Source146:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ru.xpi
-# Source146-md5:	4a4033cbcc6038316cc88529f28e6cf3
+# Source146-md5:	c38d2b8cd34ca602e20c75be38209bc2
 Source147:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/si.xpi
-# Source147-md5:	7e90ba4cd445f454a6d146a55d06152c
+# Source147-md5:	5e3021e17806548b8ef16f8bbfcc5dde
 Source148:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/sk.xpi
-# Source148-md5:	3046685c080b22cc191ba129b82bb49b
+# Source148-md5:	7acd96d00d81967bcb7faa44bb2be9c9
 Source149:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/sl.xpi
-# Source149-md5:	18c7092cbfeb54d69d715fde85c32e94
+# Source149-md5:	7cb506da5ba8deaf6815661cbff8b4c3
 Source150:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/sq.xpi
-# Source150-md5:	87ec63932febbd046249be51a9555f1b
+# Source150-md5:	1a06d8103fabf48bbbb2a657ce87d5f3
 Source151:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/sr.xpi
-# Source151-md5:	a3e646475074658adc78db12bd2ec3ee
+# Source151-md5:	5f653db03d5e15170af210fe65674850
 Source152:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/sv-SE.xpi
-# Source152-md5:	e26227c680a8e8fa4f052960642268ae
+# Source152-md5:	65c359fcaa1f69c9e2641b73510a4896
 Source153:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/tr.xpi
-# Source153-md5:	36528ffa2c321b80d06548abbb3b2b2f
+# Source153-md5:	8e0eb674f379c87c0b5d36ad00f18af1
 Source154:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/uk.xpi
-# Source154-md5:	7e98999abf8b8be94feb572a8ab2fc5d
+# Source154-md5:	ea54e3f8d8423e3327f36515f73099b4
 Source155:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/vi.xpi
-# Source155-md5:	4ce122ba7a160c592116cc7c0b08bf01
+# Source155-md5:	7c611636f2d3941903924f02086fbb9e
 Source156:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/zh-CN.xpi
-# Source156-md5:	28f758468fc875828475658b65c941fc
+# Source156-md5:	b48c4fb2764cfb0c48986235d86c7910
 Source157:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/zh-TW.xpi
-# Source157-md5:	9d6cb764e821678c17ca7d75f517c918
+# Source157-md5:	ac14a186bdb50df36da9dd645541c355
 Patch0:		prefs.patch
 Patch1:		no-subshell.patch
 Patch2:		enable-addons.patch
 Patch3:		bug-678322.patch
+Patch4:		rust-target.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf2_13 >= 2.13
@@ -1253,6 +1254,8 @@ unpack() {
 %patch2 -p0
 cd comm
 %patch3 -p1
+cd ..
+%patch4 -p1
 
 %build
 cp -p %{_datadir}/automake/config.* build/autoconf
@@ -1276,6 +1279,7 @@ export MOZ_DEBUG_SYMBOLS=1
 %endif
 
 # Options for 'configure' (same as command-line options).
+ac_add_options --host=%{_target_platform}
 ac_add_options --prefix=%{_prefix}
 %if %{?debug:1}0
 ac_add_options --disable-optimize
