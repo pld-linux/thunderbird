@@ -13,6 +13,7 @@
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
 %bcond_with	system_cairo	# build with system cairo (not supported in 60.0)
+%bcond_with	system_libvpx	# build with system libvpx (60.7.0 does not build with libvpx 1.8)
 %bcond_without	clang		# build using Clang/LLVM
 
 # UPDATING TRANSLATIONS:
@@ -38,7 +39,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	60.7.0
-Release:	2
+Release:	3
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -190,7 +191,7 @@ BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
 BuildRequires:	libpng-devel >= 2:1.6.25
 BuildRequires:	libstdc++-devel
-BuildRequires:	libvpx-devel >= 1.5.0
+%{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.5.0}
 BuildRequires:	llvm-devel
 BuildRequires:	mozldap-devel
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
@@ -223,7 +224,7 @@ Requires:	dbus-glib >= 0.60
 Requires:	glib2 >= 1:2.22
 Requires:	gtk+3 >= 3.4.0
 Requires:	libpng >= 2:1.6.25
-Requires:	libvpx >= 1.5.0
+%{?with_system_libvpx:Requires:	libvpx >= 1.5.0}
 Requires:	myspell-common
 Requires:	nspr >= 1:%{nspr_ver}
 Requires:	nss >= 1:%{nss_ver}
@@ -1331,7 +1332,7 @@ ac_add_options --with-system-bz2
 ac_add_options --with%{!?with_system_icu:out}-system-icu
 ac_add_options --with-system-jpeg
 ac_add_options --with-system-libevent
-ac_add_options --with-system-libvpx
+ac_add_options --with%{!?with_system_libvpx:out}-system-libvpx
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-system-png
