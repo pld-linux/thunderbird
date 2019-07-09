@@ -73,27 +73,6 @@ diff --git a/servo/components/style/properties/properties.mako.rs b/servo/compon
 Bug 1519629 - Document a few more macros.
 
 
-diff --git a/servo/components/style/gecko/regen_atoms.py b/servo/components/style/gecko/regen_atoms.py
---- a/servo/components/style/gecko/regen_atoms.py
-+++ b/servo/components/style/gecko/regen_atoms.py
-@@ -125,16 +125,17 @@ PRELUDE = '''
- RULE_TEMPLATE = ('("{atom}") =>\n  '
-                  '{{{{ '
-                  '#[allow(unsafe_code)] #[allow(unused_unsafe)]'
-                  'unsafe {{ $crate::string_cache::atom_macro::atom_from_static'
-                  '($crate::string_cache::atom_macro::{name} as *mut _) }}'
-                  ' }}}};')
- 
- MACRO = '''
-+/// Returns a static atom by passing the literal string it represents.
- #[macro_export]
- macro_rules! atom {{
- {}
- }}
- '''
- 
- 
- def write_atom_macro(atoms, file_name):
 --- firefox-60.6.1/servo/components/style/properties/properties.mako.rs.orig	2019-03-22 06:01:07.000000000 +0100
 +++ firefox-60.6.1/servo/components/style/properties/properties.mako.rs	2019-04-14 12:19:55.687706977 +0200
 @@ -55,6 +55,7 @@
@@ -104,3 +83,21 @@ diff --git a/servo/components/style/gecko/regen_atoms.py b/servo/components/styl
  #[cfg(feature = "gecko")]
  #[macro_export]
  macro_rules! property_name {
+--- firefox-60.8.0/servo/components/style_traits/values.rs.orig	2019-07-09 22:38:09.837119875 +0200
++++ firefox-60.8.0/servo/components/style_traits/values.rs	2019-07-09 22:40:59.863527104 +0200
+@@ -135,6 +135,7 @@
+     }
+ }
+ 
++/// dummy
+ #[macro_export]
+ macro_rules! serialize_function {
+     ($dest: expr, $name: ident($( $arg: expr, )+)) => {
+@@ -404,6 +405,7 @@
+ impl_to_css_for_predefined_type!(::cssparser::Color);
+ impl_to_css_for_predefined_type!(::cssparser::UnicodeRange);
+ 
++/// dummy
+ #[macro_export]
+ macro_rules! define_css_keyword_enum {
+     (pub enum $name:ident { $($variant:ident = $css:expr,)+ }) => {
