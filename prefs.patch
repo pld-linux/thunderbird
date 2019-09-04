@@ -1,23 +1,23 @@
 --- mozilla.orig/comm/mail/app/profile/all-thunderbird.js	2008-06-23 14:04:11.000000000 +0200
 +++ mozilla/comm/mail/app/profile/all-thunderbird.js	2008-06-24 13:22:48.000000000 +0200
-@@ -78,7 +78,7 @@
- // If set to true, the Update Service will automatically download updates when
- // app updates are enabled per the app.update.enabled preference and if the user
- // can apply updates.
--pref("app.update.auto", true);
-+pref("app.update.auto", false);
+@@ -55,7 +55,7 @@
+ // should no longer be used directly. Instead, getAppUpdateAutoEnabled and
+ // getAppUpdateAutoEnabled from UpdateUtils.jsm should be used.
+ #ifndef XP_WIN
+- pref("app.update.auto", true);
++ pref("app.update.auto", false);
+ #endif
  
  // If set to true, the Update Service will present no UI for any event.
- pref("app.update.silent", false);
-@@ -373,7 +373,7 @@
- pref("alerts.totalOpenTime", 3000);
+@@ -416,7 +416,7 @@
+ #endif
  
  // analyze urls in mail messages for scams
 -pref("mail.phishing.detection.enabled", true);
 +pref("mail.phishing.detection.enabled", false);
  // If phishing detection is enabled, allow fine grained control
  // of the local, static tests
- pref("mail.phishing.detection.ipaddresses", true); 
+ pref("mail.phishing.detection.ipaddresses", true);
 --- mozilla.orig/modules/libpref/init/all.js
 +++ mozilla/modules/libpref/init/all.js
 @@ -1053,6 +1053,7 @@ pref("javascript.options.ion.offthread_compilation", true);
