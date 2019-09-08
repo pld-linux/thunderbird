@@ -1336,7 +1336,6 @@ ac_add_options --with-system-zlib
 EOF
 
 export MOZ_MAKE_FLAGS="-j1"
-export MOZ_SERVICES_SYNC="1"
 
 AUTOCONF=/usr/bin/autoconf2_13 ./mach build
 
