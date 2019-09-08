@@ -25,6 +25,8 @@ U=http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/$V/linux-i686
 curl -s $U | sed -ne 's,.*href="\([^"]\+\)/".*,'"$U"'xpi/\1.xpi,p'
 %endif
 
+%define		_enable_debug_packages	0
+
 %if 0%{?_enable_debug_packages} != 1
 %undefine	crashreporter
 %endif
