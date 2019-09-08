@@ -1335,7 +1335,10 @@ ac_add_options --with-system-png
 ac_add_options --with-system-zlib
 EOF
 
-AUTOCONF=/usr/bin/autoconf2_13 ./mach build -v
+export MOZ_MAKE_FLAGS="-j1"
+export MOZ_SERVICES_SYNC="1"
+
+AUTOCONF=/usr/bin/autoconf2_13 ./mach build
 
 %if %{with crashreporter}
 # create debuginfo for crash-stats.mozilla.com
