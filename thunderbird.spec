@@ -8,13 +8,13 @@
 %bcond_without	lightning	# disable Sunbird/Lightning calendar
 %bcond_without	official	# official Thunderbird branding
 %bcond_with	crashreporter	# report crashes to crash-stats.mozilla.com
-%bcond_without	gold		# use default linker instead of gold
+%bcond_with	gold		# use gold instead of default linker
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
 %bcond_with	system_cairo	# build with system cairo (not supported in 60.0)
 %bcond_with	system_libvpx	# build with system libvpx (60.7.0 does not build with libvpx 1.8)
-%bcond_without	clang		# build using Clang/LLVM
+%bcond_with	clang		# build using Clang/LLVM
 
 # UPDATING TRANSLATIONS:
 %if 0
