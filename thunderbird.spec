@@ -1316,7 +1316,7 @@ ac_add_options --enable-crashreporter
 %else
 ac_add_options --disable-crashreporter
 %endif
-#ac_add_options --disable-elf-hack
+ac_add_options --disable-elf-hack
 ac_add_options --disable-gconf
 ac_add_options --disable-necko-wifi
 ac_add_options --disable-updater
