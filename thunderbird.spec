@@ -41,7 +41,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	68.0
-Release:	3
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -1403,7 +1403,7 @@ ln -s ../../share/%{name}/isp $RPM_BUILD_ROOT%{_libdir}/%{name}/isp
 cd ..
 for a in *.xpi; do
 	basename=$(basename $a .xpi)
-	cp -p $a $RPM_BUILD_ROOT%{_datadir}/%{name}/distribution/extensions/langpack-$basename@thunderbird.mozilla.org.xpi
+	cp -p $a $RPM_BUILD_ROOT%{_datadir}/%{name}/extensions/langpack-$basename@thunderbird.mozilla.org.xpi
 done
 
 %clean
@@ -1504,232 +1504,232 @@ rm -rf $HOME
 
 %files lang-ar
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-ar@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-ar@thunderbird.mozilla.org.xpi
 
 %files lang-ast
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-ast@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-ast@thunderbird.mozilla.org.xpi
 
 %files lang-be
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-be@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-be@thunderbird.mozilla.org.xpi
 
 %files lang-bg
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-bg@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-bg@thunderbird.mozilla.org.xpi
 
 %files lang-br
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-br@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-br@thunderbird.mozilla.org.xpi
 
 %files lang-ca
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-ca@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-ca@thunderbird.mozilla.org.xpi
 
 %files lang-cs
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-cs@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-cs@thunderbird.mozilla.org.xpi
 
 %files lang-cy
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-cy@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-cy@thunderbird.mozilla.org.xpi
 
 %files lang-da
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-da@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-da@thunderbird.mozilla.org.xpi
 
 %files lang-de
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-de@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-de@thunderbird.mozilla.org.xpi
 
 %files lang-dsb
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-dsb@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-dsb@thunderbird.mozilla.org.xpi
 
 %files lang-el
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-el@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-el@thunderbird.mozilla.org.xpi
 
 %files lang-en_GB
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-en-GB@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-en-GB@thunderbird.mozilla.org.xpi
 
 %files lang-en_US
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-en-US@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-en-US@thunderbird.mozilla.org.xpi
 
 %files lang-es_AR
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-es-AR@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-es-AR@thunderbird.mozilla.org.xpi
 
 %files lang-es
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-es-ES@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-es-ES@thunderbird.mozilla.org.xpi
 
 %files lang-et
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-et@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-et@thunderbird.mozilla.org.xpi
 
 %files lang-eu
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-eu@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-eu@thunderbird.mozilla.org.xpi
 
 %files lang-fi
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-fi@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-fi@thunderbird.mozilla.org.xpi
 
 %files lang-fr
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-fr@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-fr@thunderbird.mozilla.org.xpi
 
 %files lang-fy
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-fy-NL@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-fy-NL@thunderbird.mozilla.org.xpi
 
 %files lang-ga
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-ga-IE@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-ga-IE@thunderbird.mozilla.org.xpi
 
 %files lang-gd
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-gd@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-gd@thunderbird.mozilla.org.xpi
 
 %files lang-gl
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-gl@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-gl@thunderbird.mozilla.org.xpi
 
 %files lang-he
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-he@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-he@thunderbird.mozilla.org.xpi
 
 %files lang-hr
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-hr@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-hr@thunderbird.mozilla.org.xpi
 
 %files lang-hsb
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-hsb@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-hsb@thunderbird.mozilla.org.xpi
 
 %files lang-hu
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-hu@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-hu@thunderbird.mozilla.org.xpi
 
 %files lang-hy
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-hy-AM@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-hy-AM@thunderbird.mozilla.org.xpi
 
 %files lang-id
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-id@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-id@thunderbird.mozilla.org.xpi
 
 %files lang-is
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-is@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-is@thunderbird.mozilla.org.xpi
 
 %files lang-it
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-it@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-it@thunderbird.mozilla.org.xpi
 
 %files lang-ja
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-ja@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-ja@thunderbird.mozilla.org.xpi
 
 %files lang-kab
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-kab@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-kab@thunderbird.mozilla.org.xpi
 
 %files lang-kk
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-kk@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-kk@thunderbird.mozilla.org.xpi
 
 %files lang-ko
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-ko@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-ko@thunderbird.mozilla.org.xpi
 
 %files lang-lt
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-lt@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-lt@thunderbird.mozilla.org.xpi
 
 %files lang-ms
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-ms@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-ms@thunderbird.mozilla.org.xpi
 
 %files lang-nb
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-nb-NO@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-nb-NO@thunderbird.mozilla.org.xpi
 
 %files lang-nl
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-nl@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-nl@thunderbird.mozilla.org.xpi
 
 %files lang-nn
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-nn-NO@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-nn-NO@thunderbird.mozilla.org.xpi
 
 %files lang-pl
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-pl@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-pl@thunderbird.mozilla.org.xpi
 
 %files lang-pt_BR
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-pt-BR@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-pt-BR@thunderbird.mozilla.org.xpi
 
 %files lang-pt
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-pt-PT@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-pt-PT@thunderbird.mozilla.org.xpi
 
 %files lang-rm
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-rm@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-rm@thunderbird.mozilla.org.xpi
 
 %files lang-ro
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-ro@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-ro@thunderbird.mozilla.org.xpi
 
 %files lang-ru
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-ru@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-ru@thunderbird.mozilla.org.xpi
 
 %files lang-si
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-si@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-si@thunderbird.mozilla.org.xpi
 
 %files lang-sk
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-sk@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-sk@thunderbird.mozilla.org.xpi
 
 %files lang-sl
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-sl@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-sl@thunderbird.mozilla.org.xpi
 
 %files lang-sq
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-sq@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-sq@thunderbird.mozilla.org.xpi
 
 %files lang-sr
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-sr@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-sr@thunderbird.mozilla.org.xpi
 
 %files lang-sv
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-sv-SE@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-sv-SE@thunderbird.mozilla.org.xpi
 
 %files lang-tr
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-tr@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-tr@thunderbird.mozilla.org.xpi
 
 %files lang-uk
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-uk@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-uk@thunderbird.mozilla.org.xpi
 
 %files lang-vi
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-vi@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-vi@thunderbird.mozilla.org.xpi
 
 %files lang-zh_CN
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-zh-CN@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-zh-CN@thunderbird.mozilla.org.xpi
 
 %files lang-zh_TW
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/distribution/extensions/langpack-zh-TW@thunderbird.mozilla.org.xpi
+%{_datadir}/%{name}/extensions/langpack-zh-TW@thunderbird.mozilla.org.xpi
