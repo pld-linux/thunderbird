@@ -41,7 +41,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	68.0
-Release:	4
+Release:	5
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -1494,7 +1494,7 @@ rm -rf $HOME
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/chrome
 %{_datadir}/%{name}/defaults
-%{_datadir}/%{name}/extensions
+%dir %{_datadir}/%{name}/extensions
 %{_datadir}/%{name}/isp
 
 %if %{with lightning}
