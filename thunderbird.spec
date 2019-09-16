@@ -41,7 +41,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	68.0
-Release:	5
+Release:	6
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -1427,14 +1427,6 @@ exit 0
 
 %post
 %update_desktop_database_post
-# make temporary HOME, as it attempts to touch files in $HOME/.mozilla
-# dangerous if you run this with sudo with keep_env += HOME
-# also TMPDIR could be pointing to sudo user's homedir so we reset that too.
-export HOME=$(mktemp -d)
-unset TMPDIR TMP || :
-umask 022
-%{_libdir}/%{name}/thunderbird -register
-rm -rf $HOME
 
 %postun
 %update_desktop_database_postun
