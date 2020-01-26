@@ -1349,7 +1349,16 @@ ac_add_options --with-system-png
 ac_add_options --with-system-zlib
 EOF
 
-%{!?with_clang:export MOZ_MAKE_FLAGS="-j1"}
+%if ! %{with clang}
+# On x86_64 architectures, Mozilla can build up to 4 jobs at once in parallel,
+# however builds tend to fail on other arches when building in parallel.
+RPM_BUILD_NR_THREADS=1
+%ifarch %{x8664}
+jobs=$(echo %{_smp_mflags} | cut -dj -f2)
+[ -n "$jobs" -a "$jobs" -gt 4 ] && RPM_BUILD_NR_THREADS=4 || RPM_BUILD_NR_THREADS="$jobs"
+%endif
+export MOZ_MAKE_FLAGS="-j${RPM_BUILD_NR_THREADS}"
+%endif
 
 AUTOCONF=/usr/bin/autoconf2_13 ./mach build
 
