@@ -41,7 +41,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	68.5.0
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -249,10 +249,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # firefox/thunderbird/seamonkey provide their own versions
 %define		_noautoprovfiles	%{_libdir}/%{name}/components
 
+%define		moz_caps		liblgpllibs.so libmozalloc.so libmozgtk.so libmozjs.so libmozsandbox.so libmozwayland.so libxul.so
 # we don't want these to satisfy packages depending on xulrunner
-%define		_noautoprov		libmozalloc.so libmozjs.so libxul.so
+%define		_noautoprov		%{moz_caps}
 # and as we don't provide them, don't require either
-%define		_noautoreq		libmozalloc.so libmozjs.so libxul.so
+%define		_noautoreq		%{moz_caps}
 
 %define		topdir		%{_builddir}/thunderbird-%{version}
 %define		objdir		%{topdir}/obj-%{_target_cpu}
