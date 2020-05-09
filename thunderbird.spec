@@ -15,6 +15,7 @@
 %bcond_with	system_cairo	# build with system cairo (not supported in 60.0)
 %bcond_with	system_libvpx	# build with system libvpx (60.7.0 does not build with libvpx 1.8)
 %bcond_with	clang		# build using Clang/LLVM
+%bcond_with	lowmem		# lower memory requirements
 
 # UPDATING TRANSLATIONS:
 %if 0
@@ -29,6 +30,10 @@ curl -s $U | sed -ne 's,.*href="\([^"]\+\)/".*,'"$U"'xpi/\1.xpi,p'
 
 %if 0%{?_enable_debug_packages} != 1
 %undefine	crashreporter
+%endif
+
+%ifarch %{ix86} %{arm} aarch64
+%define		with_lowmem	1
 %endif
 
 %define		nspr_ver	4.21
@@ -1272,16 +1277,21 @@ export CC="%{__cc}"
 export CXX="%{__cxx}"
 %endif
 %ifarch %{ix86}
-export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64 -g0"
-export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64 -g0"
+export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
+export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
+%else
+export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
+export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
+%endif
+
+%if %{with lowmem}
+export CFLAGS="$CFLAGS -g0"
+export CXXFLAGS="$CXXFLAGS -g0"
 export MOZ_DEBUG_FLAGS=" "
 export LLVM_USE_SPLIT_DWARF=1
 export LLVM_PARALLEL_LINK_JOBS=1
 export MOZ_LINK_FLAGS="-Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
 export RUSTFLAGS="-Cdebuginfo=0"
-%else
-export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
-export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
 %endif
 
 %if %{with crashreporter}
