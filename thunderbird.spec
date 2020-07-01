@@ -200,6 +200,7 @@ BuildRequires:	libstdc++-devel
 %{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.5.0}
 BuildRequires:	llvm-devel
 BuildRequires:	mozldap-devel
+BuildRequires:	nodejs >= 8.11
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
 BuildRequires:	nss-devel >= 1:%{nss_ver}
 BuildRequires:	pango-devel >= 1:1.22.0
