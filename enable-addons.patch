@@ -9,8 +9,8 @@
  
  // Preferences for AMO integration
  pref("extensions.getAddons.cache.enabled", true);
---- comm/suite/browser/browser-prefs.js~	2013-11-06 19:54:38.789734061 +0100
-+++ comm/suite/browser/browser-prefs.js	2013-11-06 20:55:33.765611935 +0100
+--- comm/suite/app/profile/suite-prefs.js~	2013-11-06 19:54:38.789734061 +0100
++++ comm/suite/app/profile/suite-prefs.js	2013-11-06 20:55:33.765611935 +0100
 @@ -616,7 +616,7 @@
  // Disable add-ons installed into the shared user and shared system areas by
  // default. This does not include the application directory. See the SCOPE

@@ -4,7 +4,6 @@
 #
 # Conditional builds
 %bcond_with	tests		# enable tests (whatever they check)
-%bcond_without	ldap		# disable e-mail address lookups in LDAP directories
 %bcond_without	lightning	# disable Sunbird/Lightning calendar
 %bcond_without	official	# official Thunderbird branding
 %bcond_with	crashreporter	# report crashes to crash-stats.mozilla.com
@@ -36,21 +35,18 @@ curl -s $U | sed -ne 's,.*href="\([^"]\+\)/".*,'"$U"'xpi/\1.xpi,p'
 %define		with_lowmem	1
 %endif
 
-%define		nspr_ver	4.21
-%define		nss_ver		3.44.4
-
-# The actual sqlite version (see RHBZ#480989):
-%define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
+%define		nspr_ver	4.25
+%define		nss_ver		3.53.1
 
 Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
-Version:	68.10.0
+Version:	78.0
 Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
-# Source0-md5:	62ea95edc0e0c0bd90c6a3307ebe2aac
+# Source0-md5:	b92652deac6adc0be11f5e4f09c62842
 Source1:	%{name}.desktop
 Source2:	%{name}.sh
 Source100:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{version}/linux-i686/xpi/ar.xpi
@@ -172,12 +168,11 @@ Source157:	http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/%{ve
 Patch0:		prefs.patch
 Patch1:		no-subshell.patch
 Patch2:		enable-addons.patch
-Patch3:		format.patch
+Patch3:		%{name}-system-virtualenv.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf2_13 >= 2.13
 %{?with_gold:BuildRequires:	binutils >= 3:2.20.51.0.7}
-BuildRequires:	bzip2-devel
 %{?with_system_cairo:BuildRequires:	cairo-devel >= 1.10.2-5}
 BuildRequires:	cargo
 %{?with_clang:BuildRequires:	clang}
@@ -186,7 +181,7 @@ BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	fontconfig-devel >= 2.7.0
 BuildRequires:	freetype-devel >= 1:2.1.8
 BuildRequires:	glib2-devel >= 1:2.22
-BuildRequires:	gtk+3-devel >= 3.4.0
+BuildRequires:	gtk+3-devel >= 3.14.0
 BuildRequires:	libatomic-devel
 BuildRequires:	libevent-devel
 BuildRequires:	libffi-devel > 3.0.9
@@ -196,7 +191,7 @@ BuildRequires:	libiw-devel
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
 BuildRequires:	libpng-devel >= 2:1.6.25
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:4.8.1
 %{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.5.0}
 BuildRequires:	llvm-devel
 BuildRequires:	mozldap-devel
@@ -210,10 +205,8 @@ BuildRequires:	pkgconfig
 BuildRequires:	python >= 1:2.7
 BuildRequires:	python-virtualenv
 BuildRequires:	rust >= 1.34.0
-BuildRequires:	rust-cbindgen >= 0.8.2
+BuildRequires:	rust-cbindgen >= 0.14.1
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel >= 3.28.0
-BuildRequires:	startup-notification-devel >= 0.8
 BuildRequires:	virtualenv
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcomposite-devel
@@ -230,19 +223,20 @@ Requires(post):	mktemp >= 1.5-18
 %{?with_system_cairo:Requires:	cairo >= 1.10.2-5}
 Requires:	dbus-glib >= 0.60
 Requires:	glib2 >= 1:2.22
-Requires:	gtk+3 >= 3.4.0
+Requires:	glibc >= 6:2.17
+Requires:	gtk+3 >= 3.14.0
 Requires:	libpng >= 2:1.6.25
+Requires:	libstdc++ >= 6:4.8.1
 %{?with_system_libvpx:Requires:	libvpx >= 1.5.0}
 Requires:	myspell-common
 Requires:	nspr >= 1:%{nspr_ver}
 Requires:	nss >= 1:%{nss_ver}
 Requires:	pango >= 1:1.22.0
-Requires:	sqlite3 >= %{sqlite_build_version}
-Requires:	startup-notification >= 0.8
 Requires:	libjpeg-turbo
 Obsoletes:	icedove
 Obsoletes:	mozilla-thunderbird
 Obsoletes:	mozilla-thunderbird-dictionary-en-US
+Obsoletes:	thunderbird-addon-lightning < 78.0
 Conflicts:	thunderbird-lang-resources < %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -255,7 +249,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # firefox/thunderbird/seamonkey provide their own versions
 %define		_noautoprovfiles	%{_libdir}/%{name}/components
 
-%define		moz_caps		liblgpllibs.so libmozalloc.so libmozgtk.so libmozjs.so libmozsandbox.so libmozwayland.so libxul.so
+%define		moz_caps		liblgpllibs.so libmozalloc.so libmozgtk.so libmozjs.so libmozsandbox.so libmozsqlite3.so libmozwayland.so librnp.so libxul.so
 # we don't want these to satisfy packages depending on xulrunner
 %define		_noautoprov		%{moz_caps}
 # and as we don't provide them, don't require either
@@ -270,21 +264,6 @@ Thunderbird is an open-source, fast and portable email client.
 %description -l pl.UTF-8
 Thunderbird jest mającym otwarte źródła, szybkim i przenośnym klientem
 poczty.
-
-%package addon-lightning
-Summary:	An integrated calendar for Thunderbird
-Summary(pl.UTF-8):	Zintegrowany kalendarz dla Thunderbird
-License:	MPL 1.1 or GPL v2+ or LGPL v2.1+
-Group:		Applications/Networking
-Requires:	%{name} = %{version}-%{release}
-Obsoletes:	icedove-addon-lightning
-
-%description addon-lightning
-Lightning is an calendar extension to Thunderbird email client.
-
-%description addon-lightning -l pl.UTF-8
-Lightning to rozszerzenie do klienta poczty Thunderbird dodające
-funkcjonalność kalendarza.
 
 %package lang-ar
 Summary:	Arabic resources for Thunderbird
@@ -1261,7 +1240,7 @@ unpack() {
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
-%patch3 -p1
+%patch3 -p2
 
 %build
 cp -p %{_datadir}/automake/config.* build/autoconf
@@ -1331,28 +1310,18 @@ ac_add_options --disable-crashreporter
 %ifarch %{ix86} %{x8664} %{arm}
 ac_add_options --disable-elf-hack
 %endif
-ac_add_options --disable-gconf
 ac_add_options --disable-necko-wifi
 ac_add_options --disable-updater
 ac_add_options --enable-alsa
 ac_add_options --enable-application=comm/mail
 ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-default-toolkit=cairo-gtk3
-%if %{with ldap}
-ac_add_options --enable-ldap
-%else
-ac_add_options --disable-ldap
-%endif
 %{?with_official:ac_add_options --enable-official-branding}
 %{?with_gold:ac_add_options --enable-linker=gold}
-ac_add_options --enable-readline
 %{?with_shared_js:ac_add_options --enable-shared-js}
-ac_add_options --enable-startup-notification
 %{?with_system_cairo:ac_add_options --enable-system-cairo}
 ac_add_options --enable-system-ffi
-ac_add_options --enable-system-sqlite
 ac_add_options --with-distribution-id=org.pld-linux
-ac_add_options --with-system-bz2
 ac_add_options --with%{!?with_system_icu:out}-system-icu
 ac_add_options --with-system-jpeg
 ac_add_options --with-system-libevent
@@ -1470,7 +1439,9 @@ exit 0
 %ifarch %{ix86} %{x8664}
 %attr(755,root,root) %{_libdir}/%{name}/libmozsandbox.so
 %endif
+%attr(755,root,root) %{_libdir}/%{name}/libmozsqlite3.so
 %attr(755,root,root) %{_libdir}/%{name}/libmozwayland.so
+%attr(755,root,root) %{_libdir}/%{name}/librnp.so
 %attr(755,root,root) %{_libdir}/%{name}/libxul.so
 %attr(755,root,root) %{_libdir}/%{name}/*-bin
 %attr(755,root,root) %{_libdir}/%{name}/pingsender
@@ -1479,8 +1450,6 @@ exit 0
 %attr(755,root,root) %{_libdir}/%{name}/thunderbird
 
 %{_libdir}/%{name}/application.ini
-%{_libdir}/%{name}/blocklist.xml
-%{_libdir}/%{name}/chrome.manifest
 %{_libdir}/%{name}/dependentlibs.list
 %{_libdir}/%{name}/omni.ja
 %{_libdir}/%{name}/platform.ini
@@ -1498,9 +1467,6 @@ exit 0
 %{_libdir}/%{name}/Throbber-small.gif
 %endif
 
-%dir %{_libdir}/%{name}/distribution
-%dir %{_libdir}/%{name}/distribution/extensions
-
 # symlinks
 %{_libdir}/%{name}/chrome
 %{_libdir}/%{name}/defaults
@@ -1515,12 +1481,6 @@ exit 0
 %{_datadir}/%{name}/defaults
 %dir %{_datadir}/%{name}/extensions
 %{_datadir}/%{name}/isp
-
-%if %{with lightning}
-%files addon-lightning
-%defattr(644,root,root,755)
-%{_libdir}/%{name}/distribution/extensions/{e2fda1a4-762b-4020-b5ad-a41df1933103}.xpi
-%endif
 
 %files lang-ar
 %defattr(644,root,root,755)
