@@ -12,7 +12,7 @@
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
 %bcond_with	system_cairo	# build with system cairo (not supported in 60.0)
-%bcond_with	system_libvpx	# build with system libvpx (60.7.0 does not build with libvpx 1.8)
+%bcond_without	system_libvpx	# build with system libvpx
 %bcond_with	clang		# build using Clang/LLVM
 %bcond_with	lowmem		# lower memory requirements
 
@@ -192,7 +192,8 @@ BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
 BuildRequires:	libpng-devel >= 2:1.6.25
 BuildRequires:	libstdc++-devel >= 6:4.8.1
-%{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.5.0}
+BuildRequires:	libwebp-devel >= 1.0.2
+%{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.8.0}
 BuildRequires:	llvm-devel
 BuildRequires:	mozldap-devel
 BuildRequires:	nodejs >= 8.11
@@ -227,7 +228,8 @@ Requires:	glibc >= 6:2.17
 Requires:	gtk+3 >= 3.14.0
 Requires:	libpng >= 2:1.6.25
 Requires:	libstdc++ >= 6:4.8.1
-%{?with_system_libvpx:Requires:	libvpx >= 1.5.0}
+Requires:	libwebp >= 1.0.2
+%{?with_system_libvpx:Requires:	libvpx >= 1.8.0}
 Requires:	myspell-common
 Requires:	nspr >= 1:%{nspr_ver}
 Requires:	nss >= 1:%{nss_ver}
@@ -1320,8 +1322,9 @@ ac_add_options --enable-default-toolkit=cairo-gtk3
 %{?with_gold:ac_add_options --enable-linker=gold}
 %{?with_shared_js:ac_add_options --enable-shared-js}
 %{?with_system_cairo:ac_add_options --enable-system-cairo}
-ac_add_options --enable-system-ffi
+ac_add_options --enable-system-pixman
 ac_add_options --with-distribution-id=org.pld-linux
+ac_add_options --with-system-ffi
 ac_add_options --with%{!?with_system_icu:out}-system-icu
 ac_add_options --with-system-jpeg
 ac_add_options --with-system-libevent
@@ -1329,6 +1332,7 @@ ac_add_options --with%{!?with_system_libvpx:out}-system-libvpx
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-system-png
+ac_add_options --with-system-webp
 ac_add_options --with-system-zlib
 EOF
 
