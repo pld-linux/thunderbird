@@ -13,7 +13,7 @@
 %bcond_without	system_icu	# build without system ICU
 %bcond_with	system_cairo	# build with system cairo (not supported in 60.0)
 %bcond_without	system_libvpx	# build with system libvpx
-%bcond_with	clang		# build using Clang/LLVM
+%bcond_without	clang		# build using Clang/LLVM
 %bcond_with	lowmem		# lower memory requirements
 
 # UPDATING TRANSLATIONS:
