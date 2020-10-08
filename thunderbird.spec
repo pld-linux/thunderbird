@@ -193,21 +193,23 @@ BuildRequires:	autoconf2_13 >= 2.13
 BuildRequires:	cargo
 %{?with_clang:BuildRequires:	clang}
 BuildRequires:	clang-devel
+BuildRequires:	dbus-devel >= 0.60
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	fontconfig-devel >= 2.7.0
 BuildRequires:	freetype-devel >= 1:2.1.8
 BuildRequires:	glib2-devel >= 1:2.22
 BuildRequires:	gtk+3-devel >= 3.14.0
 BuildRequires:	libatomic-devel
+BuildRequires:	libdrm-devel >= 2.4
 BuildRequires:	libevent-devel
 BuildRequires:	libffi-devel > 3.0.9
-%{?with_system_icu:BuildRequires:	libicu-devel >= 63.1}
+%{?with_system_icu:BuildRequires:	libicu-devel >= 67.1}
 BuildRequires:	libiw-devel
 # requires libjpeg-turbo implementing at least libjpeg 6b API
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
 BuildRequires:	libpng-devel >= 2:1.6.25
-BuildRequires:	libstdc++-devel >= 6:4.8.1
+BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	libwebp-devel >= 1.0.2
 %{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.8.0}
 BuildRequires:	llvm-devel
@@ -231,6 +233,7 @@ BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXt-devel
+BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.4.1
 %ifarch %{ix86} %{x8664}
 BuildRequires:	yasm >= 1.0.1
 %endif
@@ -239,9 +242,13 @@ BuildRequires:	zlib-devel >= 1.2.3
 Requires(post):	mktemp >= 1.5-18
 %{?with_system_cairo:Requires:	cairo >= 1.10.2-5}
 Requires:	dbus-glib >= 0.60
+Requires:	fontconfig >= 2.7.0
 Requires:	glib2 >= 1:2.22
 Requires:	glibc >= 6:2.17
 Requires:	gtk+3 >= 3.14.0
+Requires:	libdrm >= 2.4
+%{?with_system_icu:Requires:	libicu >= 67.1}
+Requires:	libjpeg-turbo
 Requires:	libpng >= 2:1.6.25
 Requires:	libstdc++ >= 6:4.8.1
 Requires:	libwebp >= 1.0.2
@@ -250,7 +257,7 @@ Requires:	myspell-common
 Requires:	nspr >= 1:%{nspr_ver}
 Requires:	nss >= 1:%{nss_ver}
 Requires:	pango >= 1:1.22.0
-Requires:	libjpeg-turbo
+Requires:	xorg-lib-libxkbcommon >= 0.4.1
 Obsoletes:	icedove
 Obsoletes:	mozilla-thunderbird
 Obsoletes:	mozilla-thunderbird-dictionary-en-US
