@@ -8,7 +8,7 @@
 + pref("app.update.auto", false);
  #endif
  
- // If set to true, the Update Service will present no UI for any event.
+ // If set to true, the Update Service will apply updates in the background
 @@ -416,7 +416,7 @@
  #endif
  
@@ -26,5 +26,5 @@
  pref("javascript.options.discardSystemSource", false);
 +pref("javascript.options.showInConsole",    true);
  
- // Many of the the following preferences tune the SpiderMonkey GC, if yo
+ // Many of the the following preferences tune the SpiderMonkey GC, if you
  // change the defaults here please also consider changing them in
