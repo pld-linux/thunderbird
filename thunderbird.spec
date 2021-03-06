@@ -223,6 +223,7 @@ BuildRequires:	pixman-devel >= 0.19.2
 BuildRequires:	pkgconfig
 BuildRequires:	python3 >= 1:3.8.5-3
 BuildRequires:	python3-virtualenv
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rust >= 1.41.0
 BuildRequires:	rust-cbindgen >= 0.14.1
 BuildRequires:	sed >= 4.0
@@ -260,9 +261,9 @@ Requires:	nspr >= 1:%{nspr_ver}
 Requires:	nss >= 1:%{nss_ver}
 Requires:	pango >= 1:1.22.0
 Requires:	xorg-lib-libxkbcommon >= 0.4.1
-Obsoletes:	icedove
-Obsoletes:	mozilla-thunderbird
-Obsoletes:	mozilla-thunderbird-dictionary-en-US
+Obsoletes:	icedove < 39
+Obsoletes:	mozilla-thunderbird < 32
+Obsoletes:	mozilla-thunderbird-dictionary-en-US < 2.0
 Obsoletes:	thunderbird-addon-lightning < 78.0
 Conflicts:	thunderbird-lang-resources < %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -312,8 +313,8 @@ Summary(pl.UTF-8):	Arabskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ar
-Obsoletes:	mozilla-thunderbird-lang-ar
+Obsoletes:	icedove-lang-ar < 39
+Obsoletes:	mozilla-thunderbird-lang-ar < 32
 BuildArch:	noarch
 
 %description lang-ar
@@ -328,8 +329,8 @@ Summary(pl.UTF-8):	Asturskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ast
-Obsoletes:	mozilla-thunderbird-lang-ast
+Obsoletes:	icedove-lang-ast < 39
+Obsoletes:	mozilla-thunderbird-lang-ast < 32
 BuildArch:	noarch
 
 %description lang-ast
@@ -344,8 +345,8 @@ Summary(pl.UTF-8):	Białoruskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-be
-Obsoletes:	mozilla-thunderbird-lang-be
+Obsoletes:	icedove-lang-be < 39
+Obsoletes:	mozilla-thunderbird-lang-be < 32
 BuildArch:	noarch
 
 %description lang-be
@@ -360,8 +361,8 @@ Summary(pl.UTF-8):	Bułgarskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-bg
-Obsoletes:	mozilla-thunderbird-lang-bg
+Obsoletes:	icedove-lang-bg < 39
+Obsoletes:	mozilla-thunderbird-lang-bg < 32
 BuildArch:	noarch
 
 %description lang-bg
@@ -376,8 +377,8 @@ Summary(pl.UTF-8):	Bengalskie pliki językowe dla Thunderbirda (wersja dla Bangl
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-bn
-Obsoletes:	mozilla-thunderbird-lang-bn
+Obsoletes:	icedove-lang-bn < 39
+Obsoletes:	mozilla-thunderbird-lang-bn < 32
 BuildArch:	noarch
 
 %description lang-bn
@@ -392,8 +393,8 @@ Summary(pl.UTF-8):	Bretońskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-br
-Obsoletes:	mozilla-thunderbird-lang-br
+Obsoletes:	icedove-lang-br < 39
+Obsoletes:	mozilla-thunderbird-lang-br < 32
 BuildArch:	noarch
 
 %description lang-br
@@ -408,8 +409,8 @@ Summary(pl.UTF-8):	Katalońskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ca
-Obsoletes:	mozilla-thunderbird-lang-ca
+Obsoletes:	icedove-lang-ca < 39
+Obsoletes:	mozilla-thunderbird-lang-ca < 32
 BuildArch:	noarch
 
 %description lang-ca
@@ -452,8 +453,8 @@ Summary(pl.UTF-8):	Czeskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-cs
-Obsoletes:	mozilla-thunderbird-lang-cs
+Obsoletes:	icedove-lang-cs < 39
+Obsoletes:	mozilla-thunderbird-lang-cs < 32
 BuildArch:	noarch
 
 %description lang-cs
@@ -468,8 +469,8 @@ Summary(pl.UTF-8):	Duńskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-da
-Obsoletes:	mozilla-thunderbird-lang-da
+Obsoletes:	icedove-lang-da < 39
+Obsoletes:	mozilla-thunderbird-lang-da < 32
 BuildArch:	noarch
 
 %description lang-da
@@ -484,8 +485,8 @@ Summary(pl.UTF-8):	Niemieckie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-de
-Obsoletes:	mozilla-thunderbird-lang-de
+Obsoletes:	icedove-lang-de < 39
+Obsoletes:	mozilla-thunderbird-lang-de < 32
 BuildArch:	noarch
 
 %description lang-de
@@ -514,8 +515,8 @@ Summary(pl.UTF-8):	Greckie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-el
-Obsoletes:	mozilla-thunderbird-lang-el
+Obsoletes:	icedove-lang-el < 39
+Obsoletes:	mozilla-thunderbird-lang-el < 32
 BuildArch:	noarch
 
 %description lang-el
@@ -544,8 +545,8 @@ Summary(pl.UTF-8):	Angielskie (brytyjskie) pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-en_GB
-Obsoletes:	mozilla-thunderbird-lang-en_GB
+Obsoletes:	icedove-lang-en_GB < 39
+Obsoletes:	mozilla-thunderbird-lang-en_GB < 32
 BuildArch:	noarch
 
 %description lang-en_GB
@@ -560,8 +561,8 @@ Summary(pl.UTF-8):	Angielskie (amerykańskie) pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-en_US
-Obsoletes:	mozilla-thunderbird-lang-en_US
+Obsoletes:	icedove-lang-en_US < 39
+Obsoletes:	mozilla-thunderbird-lang-en_US < 32
 BuildArch:	noarch
 
 %description lang-en_US
@@ -576,8 +577,8 @@ Summary(pl.UTF-8):	Hiszpańskie pliki językowe dla Thunderbirda (wersja dla And
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-es_AR
-Obsoletes:	mozilla-thunderbird-lang-es_AR
+Obsoletes:	icedove-lang-es_AR < 39
+Obsoletes:	mozilla-thunderbird-lang-es_AR < 32
 BuildArch:	noarch
 
 %description lang-es_AR
@@ -592,8 +593,8 @@ Summary(pl.UTF-8):	Hiszpańskie pliki językowe dla Thunderbirda (wersja dla His
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-es
-Obsoletes:	mozilla-thunderbird-lang-es
+Obsoletes:	icedove-lang-es < 39
+Obsoletes:	mozilla-thunderbird-lang-es < 32
 BuildArch:	noarch
 
 %description lang-es
@@ -608,8 +609,8 @@ Summary(pl.UTF-8):	Estońskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-et
-Obsoletes:	mozilla-thunderbird-lang-et
+Obsoletes:	icedove-lang-et < 39
+Obsoletes:	mozilla-thunderbird-lang-et < 32
 BuildArch:	noarch
 
 %description lang-et
@@ -624,8 +625,8 @@ Summary(pl.UTF-8):	Baskijskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-eu
-Obsoletes:	mozilla-thunderbird-lang-eu
+Obsoletes:	icedove-lang-eu < 39
+Obsoletes:	mozilla-thunderbird-lang-eu < 32
 BuildArch:	noarch
 
 %description lang-eu
@@ -654,8 +655,8 @@ Summary(pl.UTF-8):	Fińskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-fi
-Obsoletes:	mozilla-thunderbird-lang-fi
+Obsoletes:	icedove-lang-fi < 39
+Obsoletes:	mozilla-thunderbird-lang-fi < 32
 BuildArch:	noarch
 
 %description lang-fi
@@ -670,8 +671,8 @@ Summary(pl.UTF-8):	Francuskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-fr
-Obsoletes:	mozilla-thunderbird-lang-fr
+Obsoletes:	icedove-lang-fr < 39
+Obsoletes:	mozilla-thunderbird-lang-fr < 32
 BuildArch:	noarch
 
 %description lang-fr
@@ -686,8 +687,8 @@ Summary(pl.UTF-8):	Fryzyjskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-fy
-Obsoletes:	mozilla-thunderbird-lang-fy
+Obsoletes:	icedove-lang-fy < 39
+Obsoletes:	mozilla-thunderbird-lang-fy < 32
 BuildArch:	noarch
 
 %description lang-fy
@@ -702,8 +703,8 @@ Summary(pl.UTF-8):	Irlandzkie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ga
-Obsoletes:	mozilla-thunderbird-lang-ga
+Obsoletes:	icedove-lang-ga < 39
+Obsoletes:	mozilla-thunderbird-lang-ga < 32
 BuildArch:	noarch
 
 %description lang-ga
@@ -718,8 +719,8 @@ Summary(pl.UTF-8):	Szkockie (gaelickie) pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-gd
-Obsoletes:	mozilla-thunderbird-lang-gd
+Obsoletes:	icedove-lang-gd < 39
+Obsoletes:	mozilla-thunderbird-lang-gd < 32
 BuildArch:	noarch
 
 %description lang-gd
@@ -734,8 +735,8 @@ Summary(pl.UTF-8):	Galicyjskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-gl
-Obsoletes:	mozilla-thunderbird-lang-gl
+Obsoletes:	icedove-lang-gl < 39
+Obsoletes:	mozilla-thunderbird-lang-gl < 32
 BuildArch:	noarch
 
 %description lang-gl
@@ -750,8 +751,8 @@ Summary(pl.UTF-8):	Hebrajskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-he
-Obsoletes:	mozilla-thunderbird-lang-he
+Obsoletes:	icedove-lang-he < 39
+Obsoletes:	mozilla-thunderbird-lang-he < 32
 BuildArch:	noarch
 
 %description lang-he
@@ -766,8 +767,8 @@ Summary(pl.UTF-8):	Chorwackie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-hr
-Obsoletes:	mozilla-thunderbird-lang-hr
+Obsoletes:	icedove-lang-hr < 39
+Obsoletes:	mozilla-thunderbird-lang-hr < 32
 BuildArch:	noarch
 
 %description lang-hr
@@ -796,8 +797,8 @@ Summary(pl.UTF-8):	Węgierskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-hu
-Obsoletes:	mozilla-thunderbird-lang-hu
+Obsoletes:	icedove-lang-hu < 39
+Obsoletes:	mozilla-thunderbird-lang-hu < 32
 BuildArch:	noarch
 
 %description lang-hu
@@ -812,8 +813,8 @@ Summary(pl.UTF-8):	Ormiańskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-hy
-Obsoletes:	mozilla-thunderbird-lang-hy
+Obsoletes:	icedove-lang-hy < 39
+Obsoletes:	mozilla-thunderbird-lang-hy < 32
 BuildArch:	noarch
 
 %description lang-hy
@@ -828,8 +829,8 @@ Summary(pl.UTF-8):	Indonezyjskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-id
-Obsoletes:	mozilla-thunderbird-lang-id
+Obsoletes:	icedove-lang-id < 39
+Obsoletes:	mozilla-thunderbird-lang-id < 32
 BuildArch:	noarch
 
 %description lang-id
@@ -844,8 +845,8 @@ Summary(pl.UTF-8):	Islandzkie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-is
-Obsoletes:	mozilla-thunderbird-lang-is
+Obsoletes:	icedove-lang-is < 39
+Obsoletes:	mozilla-thunderbird-lang-is < 32
 BuildArch:	noarch
 
 %description lang-is
@@ -860,8 +861,8 @@ Summary(pl.UTF-8):	Włoskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-it
-Obsoletes:	mozilla-thunderbird-lang-it
+Obsoletes:	icedove-lang-it < 39
+Obsoletes:	mozilla-thunderbird-lang-it < 32
 BuildArch:	noarch
 
 %description lang-it
@@ -876,8 +877,8 @@ Summary(pl.UTF-8):	Japońskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ja
-Obsoletes:	mozilla-thunderbird-lang-ja
+Obsoletes:	icedove-lang-ja < 39
+Obsoletes:	mozilla-thunderbird-lang-ja < 32
 BuildArch:	noarch
 
 %description lang-ja
@@ -934,8 +935,8 @@ Summary(pl.UTF-8):	Koreańskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ko
-Obsoletes:	mozilla-thunderbird-lang-ko
+Obsoletes:	icedove-lang-ko < 39
+Obsoletes:	mozilla-thunderbird-lang-ko < 32
 BuildArch:	noarch
 
 %description lang-ko
@@ -950,8 +951,8 @@ Summary(pl.UTF-8):	Litewskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-lt
-Obsoletes:	mozilla-thunderbird-lang-lt
+Obsoletes:	icedove-lang-lt < 39
+Obsoletes:	mozilla-thunderbird-lang-lt < 32
 BuildArch:	noarch
 
 %description lang-lt
@@ -980,8 +981,8 @@ Summary(pl.UTF-8):	Norweskie (bokmaal) pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-nb
-Obsoletes:	mozilla-thunderbird-lang-nb
+Obsoletes:	icedove-lang-nb < 39
+Obsoletes:	mozilla-thunderbird-lang-nb < 32
 BuildArch:	noarch
 
 %description lang-nb
@@ -996,8 +997,8 @@ Summary(pl.UTF-8):	Holenderskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-nl
-Obsoletes:	mozilla-thunderbird-lang-nl
+Obsoletes:	icedove-lang-nl < 39
+Obsoletes:	mozilla-thunderbird-lang-nl < 32
 BuildArch:	noarch
 
 %description lang-nl
@@ -1012,8 +1013,8 @@ Summary(pl.UTF-8):	Norweskie (nynorsk) pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-nn
-Obsoletes:	mozilla-thunderbird-lang-nn
+Obsoletes:	icedove-lang-nn < 39
+Obsoletes:	mozilla-thunderbird-lang-nn < 32
 BuildArch:	noarch
 
 %description lang-nn
@@ -1028,8 +1029,8 @@ Summary(pl.UTF-8):	Pendżabskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-pa
-Obsoletes:	mozilla-thunderbird-lang-pa
+Obsoletes:	icedove-lang-pa < 39
+Obsoletes:	mozilla-thunderbird-lang-pa < 32
 BuildArch:	noarch
 
 %description lang-pa
@@ -1042,11 +1043,10 @@ Pendżabskie pliki językowe dla Thunderbirda.
 Summary:	Polish resources for Thunderbird
 Summary(pl.UTF-8):	Polskie pliki językowe dla Thunderbirda
 Group:		I18n
-URL:		http://www.thunderbird.pl/
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-pl
-Obsoletes:	mozilla-thunderbird-lang-pl
+Obsoletes:	icedove-lang-pl < 39
+Obsoletes:	mozilla-thunderbird-lang-pl < 32
 BuildArch:	noarch
 
 %description lang-pl
@@ -1061,8 +1061,8 @@ Summary(pl.UTF-8):	Portugalskie (brazylijskie) pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-pt_BR
-Obsoletes:	mozilla-thunderbird-lang-pt_BR
+Obsoletes:	icedove-lang-pt_BR < 39
+Obsoletes:	mozilla-thunderbird-lang-pt_BR < 32
 BuildArch:	noarch
 
 %description lang-pt_BR
@@ -1077,8 +1077,8 @@ Summary(pl.UTF-8):	Portugalskie pliki językowe dla Thunderbirda (wersja dla Por
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-pt
-Obsoletes:	mozilla-thunderbird-lang-pt
+Obsoletes:	icedove-lang-pt < 39
+Obsoletes:	mozilla-thunderbird-lang-pt < 32
 BuildArch:	noarch
 
 %description lang-pt
@@ -1093,8 +1093,8 @@ Summary(pl.UTF-8):	Retoromańskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-rm
-Obsoletes:	mozilla-thunderbird-lang-rm
+Obsoletes:	icedove-lang-rm < 39
+Obsoletes:	mozilla-thunderbird-lang-rm < 32
 BuildArch:	noarch
 
 %description lang-rm
@@ -1109,8 +1109,8 @@ Summary(pl.UTF-8):	Rumuńskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ro
-Obsoletes:	mozilla-thunderbird-lang-ro
+Obsoletes:	icedove-lang-ro < 39
+Obsoletes:	mozilla-thunderbird-lang-ro < 32
 BuildArch:	noarch
 
 %description lang-ro
@@ -1125,8 +1125,8 @@ Summary(pl.UTF-8):	Rosyjskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ru
-Obsoletes:	mozilla-thunderbird-lang-ru
+Obsoletes:	icedove-lang-ru < 39
+Obsoletes:	mozilla-thunderbird-lang-ru < 32
 BuildArch:	noarch
 
 %description lang-ru
@@ -1141,8 +1141,8 @@ Summary(pl.UTF-8):	Syngaleskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-si
-Obsoletes:	mozilla-thunderbird-lang-si
+Obsoletes:	icedove-lang-si < 39
+Obsoletes:	mozilla-thunderbird-lang-si < 32
 BuildArch:	noarch
 
 %description lang-si
@@ -1157,8 +1157,8 @@ Summary(pl.UTF-8):	Słowackie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-sk
-Obsoletes:	mozilla-thunderbird-lang-sk
+Obsoletes:	icedove-lang-sk < 39
+Obsoletes:	mozilla-thunderbird-lang-sk < 32
 BuildArch:	noarch
 
 %description lang-sk
@@ -1173,8 +1173,8 @@ Summary(pl.UTF-8):	Słoweńskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-sl
-Obsoletes:	mozilla-thunderbird-lang-sl
+Obsoletes:	icedove-lang-sl < 39
+Obsoletes:	mozilla-thunderbird-lang-sl < 32
 BuildArch:	noarch
 
 %description lang-sl
@@ -1189,8 +1189,8 @@ Summary(pl.UTF-8):	Albańskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-sq
-Obsoletes:	mozilla-thunderbird-lang-sq
+Obsoletes:	icedove-lang-sq < 39
+Obsoletes:	mozilla-thunderbird-lang-sq < 32
 BuildArch:	noarch
 
 %description lang-sq
@@ -1205,8 +1205,8 @@ Summary(pl.UTF-8):	Serbskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-sr
-Obsoletes:	mozilla-thunderbird-lang-sr
+Obsoletes:	icedove-lang-sr < 39
+Obsoletes:	mozilla-thunderbird-lang-sr < 32
 BuildArch:	noarch
 
 %description lang-sr
@@ -1221,8 +1221,8 @@ Summary(pl.UTF-8):	Szwedzkie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-sv
-Obsoletes:	mozilla-thunderbird-lang-sv
+Obsoletes:	icedove-lang-sv < 39
+Obsoletes:	mozilla-thunderbird-lang-sv < 32
 BuildArch:	noarch
 
 %description lang-sv
@@ -1237,8 +1237,8 @@ Summary(pl.UTF-8):	Tamilskie pliki językowe dla Thunderbirda (wersja dla Sri La
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ta_LK
-Obsoletes:	mozilla-thunderbird-lang-ta_LK
+Obsoletes:	icedove-lang-ta_LK < 39
+Obsoletes:	mozilla-thunderbird-lang-ta_LK < 32
 BuildArch:	noarch
 
 %description lang-ta_LK
@@ -1267,8 +1267,8 @@ Summary(pl.UTF-8):	Tureckie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-tr
-Obsoletes:	mozilla-thunderbird-lang-tr
+Obsoletes:	icedove-lang-tr < 39
+Obsoletes:	mozilla-thunderbird-lang-tr < 32
 BuildArch:	noarch
 
 %description lang-tr
@@ -1283,8 +1283,8 @@ Summary(pl.UTF-8):	Ukraińskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-uk
-Obsoletes:	mozilla-thunderbird-lang-uk
+Obsoletes:	icedove-lang-uk < 39
+Obsoletes:	mozilla-thunderbird-lang-uk < 32
 BuildArch:	noarch
 
 %description lang-uk
@@ -1313,8 +1313,8 @@ Summary(pl.UTF-8):	Wietnamskie pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-vi
-Obsoletes:	mozilla-thunderbird-lang-vi
+Obsoletes:	icedove-lang-vi < 39
+Obsoletes:	mozilla-thunderbird-lang-vi < 32
 BuildArch:	noarch
 
 %description lang-vi
@@ -1329,8 +1329,8 @@ Summary(pl.UTF-8):	Chińskie (uproszczone) pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-zh_CN
-Obsoletes:	mozilla-thunderbird-lang-zh_CN
+Obsoletes:	icedove-lang-zh_CN < 39
+Obsoletes:	mozilla-thunderbird-lang-zh_CN < 32
 BuildArch:	noarch
 
 %description lang-zh_CN
@@ -1345,8 +1345,8 @@ Summary(pl.UTF-8):	Chińskie tradycyjne pliki językowe dla Thunderbirda
 Group:		I18n
 Requires:	thunderbird >= %{version}
 Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-zh_TW
-Obsoletes:	mozilla-thunderbird-lang-zh_TW
+Obsoletes:	icedove-lang-zh_TW < 39
+Obsoletes:	mozilla-thunderbird-lang-zh_TW < 32
 BuildArch:	noarch
 
 %description lang-zh_TW
