@@ -1540,7 +1540,7 @@ exit 0
 %attr(755,root,root) %{_libdir}/%{name}/libmozgtk.so
 %attr(755,root,root) %{_libdir}/%{name}/liblgpllibs.so
 %{?with_shared_js:%attr(755,root,root) %{_libdir}/%{name}/libmozjs.so}
-%ifarch %{ix86} %{x8664}
+%ifarch %{ix86} %{x8664} %{arm} aarch64
 %attr(755,root,root) %{_libdir}/%{name}/libmozsandbox.so
 %endif
 %attr(755,root,root) %{_libdir}/%{name}/libmozsqlite3.so
