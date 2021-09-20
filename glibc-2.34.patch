@@ -1,5 +1,13 @@
 --- thunderbird-91.1.1/modules/fdlibm/src/math_private.h.orig	2021-09-16 18:04:11.000000000 +0200
 +++ thunderbird-91.1.1/modules/fdlibm/src/math_private.h	2021-09-20 09:14:38.327837986 +0200
+@@ -18,6 +18,7 @@
+ #define	_MATH_PRIVATE_H_
+ 
+ #include <cfloat>
++#include <math.h>
+ #include <stdint.h>
+ #include <sys/types.h>
+ 
 @@ -30,8 +30,7 @@
   * Adapted from https://github.com/freebsd/freebsd-src/search?q=__double_t
   */
