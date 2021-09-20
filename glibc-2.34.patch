@@ -1,0 +1,12 @@
+--- thunderbird-91.1.1/modules/fdlibm/src/math_private.h.orig	2021-09-16 18:04:11.000000000 +0200
++++ thunderbird-91.1.1/modules/fdlibm/src/math_private.h	2021-09-20 09:14:38.327837986 +0200
+@@ -30,8 +30,7 @@
+  * Adapted from https://github.com/freebsd/freebsd-src/search?q=__double_t
+  */
+ 
+-typedef double      __double_t;
+-typedef __double_t  double_t;
++typedef double_t __double_t;
+ 
+ /*
+  * The original fdlibm code used statements like:
