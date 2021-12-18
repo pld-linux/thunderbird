@@ -183,6 +183,7 @@ Patch1:		no-subshell.patch
 Patch2:		enable-addons.patch
 Patch3:		%{name}-system-virtualenv.patch
 Patch4:		glibc-2.34.patch
+Patch5:		wayland-1.20.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf2_13 >= 2.13
@@ -1352,6 +1353,7 @@ unpack() {
 %patch2 -p0
 %patch3 -p2
 %patch4 -p1
+%patch5 -p1
 
 %build
 cp -p %{_datadir}/automake/config.* build/autoconf
