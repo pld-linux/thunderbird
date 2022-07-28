@@ -1,0 +1,27 @@
+
+diff --git a/gfx/webrender_bindings/webrender_ffi.h b/gfx/webrender_bindings/webrender_ffi.h
+--- a/gfx/webrender_bindings/webrender_ffi.h
++++ b/gfx/webrender_bindings/webrender_ffi.h
+@@ -68,18 +68,16 @@ struct InternerSubReport {
+ struct Transaction;
+ struct WrWindowId;
+ struct DocumentId;
+ struct WrPipelineInfo;
+ 
+ struct WrPipelineIdAndEpoch;
+ using WrPipelineIdEpochs = nsTArray<WrPipelineIdAndEpoch>;
+ 
+-const uint64_t ROOT_CLIP_CHAIN = ~0;
+-
+ }  // namespace wr
+ }  // namespace mozilla
+ 
+ void apz_register_updater(mozilla::wr::WrWindowId aWindowId);
+ void apz_pre_scene_swap(mozilla::wr::WrWindowId aWindowId);
+ void apz_post_scene_swap(mozilla::wr::WrWindowId aWindowId,
+                          const mozilla::wr::WrPipelineInfo* aInfo);
+ void apz_run_updater(mozilla::wr::WrWindowId aWindowId);
+
+
+
+
