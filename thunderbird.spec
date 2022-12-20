@@ -231,6 +231,7 @@ BuildRequires:	rust >= 1.59.0
 BuildRequires:	rust-cbindgen >= 0.24.2
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	unzip
 BuildRequires:	virtualenv
 BuildRequires:	xorg-lib-libICE-devel
 BuildRequires:	xorg-lib-libSM-devel
