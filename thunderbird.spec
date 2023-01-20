@@ -225,6 +225,7 @@ BuildRequires:	pixman-devel >= 0.36.0
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	pulseaudio-devel
 BuildRequires:	python3 >= 1:3.8.5-3
+BuildRequires:	python3-devel-tools
 BuildRequires:	python3-simplejson
 BuildRequires:	python3-virtualenv >= 20
 BuildRequires:	rpm-build >= 4.6
