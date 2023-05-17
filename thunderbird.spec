@@ -186,6 +186,8 @@ Patch2:		enable-addons.patch
 Patch3:		%{name}-system-virtualenv.patch
 Patch4:		glibc-2.34.patch
 Patch5:		gcc13-header-dependencies.patch
+Patch6:		llvm16-bindgen.patch
+Patch7:		llvm16-crash.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf2_13 >= 2.13
@@ -1381,6 +1383,8 @@ unpack() {
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 cp -p %{_datadir}/automake/config.* build/autoconf
