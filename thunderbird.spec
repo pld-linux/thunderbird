@@ -41,7 +41,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	115.0
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	https://releases.mozilla.org/pub/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -254,6 +254,8 @@ BuildRequires:	yasm >= 1.0.1
 %endif
 BuildRequires:	zip
 BuildRequires:	zlib-devel >= 1.2.3
+Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	gtk-update-icon-cache
 Requires(post):	mktemp >= 1.5-18
 %{?with_system_cairo:Requires:	cairo >= 1.10.2-5}
 Requires:	dbus-glib >= 0.60
@@ -262,6 +264,7 @@ Requires:	freetype >= 1:2.2.1
 Requires:	glib2 >= 1:2.42
 Requires:	glibc >= 6:2.17
 Requires:	gtk+3 >= 3.14.0
+Requires:	hicolor-icon-theme
 %{?with_system_icu:Requires:	libicu >= 73.2-2}
 Requires:	libjpeg-turbo
 Requires:	libpng >= 2:1.6.35
@@ -1495,7 +1498,7 @@ MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name}/{extensions,plugins},%{_datadir}/%{name},%{_pixmapsdir},%{_desktopdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name}/{extensions,plugins},%{_datadir}/%{name},%{_desktopdir}}
 
 cd %{objdir}
 %{__make} -C comm/mail/installer stage-package \
@@ -1514,8 +1517,16 @@ install -d $RPM_BUILD_ROOT%{_exec_prefix}/lib/debug%{_libdir}/%{name}
 cp -a dist/%{name}-%{version}.en-US.linux-*.crashreporter-symbols.zip $RPM_BUILD_ROOT%{_prefix}/lib/debug%{_libdir}/%{name}
 %endif
 
+cd ..
+
 %{__sed} -e 's,@LIBDIR@,%{_libdir},' %{SOURCE2} > $RPM_BUILD_ROOT%{_bindir}/%{name}
-cp -p dist/thunderbird/chrome/icons/default/default48.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
+
+# install icons and desktop file
+for i in 16 22 24 32 48 64 128 256; do
+	install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps
+	cp -a comm/mail/branding/thunderbird/default${i}.png \
+		$RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps/thunderbird.png
+done
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
 # move arch independant ones to datadir
@@ -1531,7 +1542,6 @@ ln -s ../../share/%{name}/isp $RPM_BUILD_ROOT%{_libdir}/%{name}/isp
 # remove unecessary stuff
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/removed-files
 
-cd ..
 for a in *.xpi; do
 	basename=$(basename $a .xpi)
 	cp -p $a $RPM_BUILD_ROOT%{_datadir}/%{name}/extensions/langpack-$basename@thunderbird.mozilla.org.xpi
@@ -1557,9 +1567,11 @@ done
 exit 0
 
 %post
+%update_icon_cache hicolor
 %update_desktop_database_post
 
 %postun
+%update_icon_cache hicolor
 %update_desktop_database_postun
 
 %files
@@ -1611,8 +1623,8 @@ exit 0
 %{_libdir}/%{name}/extensions
 %{_libdir}/%{name}/isp
 
-%{_pixmapsdir}/thunderbird.png
 %{_desktopdir}/thunderbird.desktop
+%{_iconsdir}/hicolor/*/apps/thunderbird.png
 
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/chrome
