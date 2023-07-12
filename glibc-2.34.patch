@@ -8,13 +8,15 @@
  #include <stdint.h>
  #include <sys/types.h>
  
-@@ -30,8 +30,7 @@
+@@ -30,9 +30,8 @@
   * Adapted from https://github.com/freebsd/freebsd-src/search?q=__double_t
   */
  
 -typedef double      __double_t;
 -typedef __double_t  double_t;
-+typedef double_t __double_t;
+-typedef float       __float_t;
++typedef double_t  __double_t;
++typedef float_t  __float_t;
  
  /*
   * The original fdlibm code used statements like:
