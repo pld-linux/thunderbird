@@ -14,6 +14,7 @@
 %bcond_without	system_libvpx	# build with system libvpx
 %bcond_without	clang		# build using Clang/LLVM
 %bcond_with	lowmem		# lower memory requirements
+%bcond_with	lowmem2		# even lower memory requirements at cost of build time
 
 # UPDATING TRANSLATIONS:
 %if 0
@@ -1489,7 +1490,7 @@ export MACH_SYSTEM_ASSERTED_COMPATIBLE_WITH_BUILD_SITE=1
 export MACH_SYSTEM_ASSERTED_COMPATIBLE_WITH_MACH_SITE=1
 AUTOCONF=/usr/bin/autoconf2_13 \
 MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=none \
-./mach build
+./mach build %{?with_lowmem2:-j1}
 
 %if %{with crashreporter}
 # create debuginfo for crash-stats.mozilla.com
