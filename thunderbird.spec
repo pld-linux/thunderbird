@@ -389,22 +389,6 @@ Bulgarian resources for Thunderbird.
 %description lang-bg -l pl.UTF-8
 Bułgarskie pliki językowe dla Thunderbirda.
 
-%package lang-bn
-Summary:	Bengali (Bangladesh) resources for Thunderbird
-Summary(pl.UTF-8):	Bengalskie pliki językowe dla Thunderbirda (wersja dla Bangladeszu)
-Group:		I18n
-Requires:	thunderbird >= %{version}
-Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-bn < 39
-Obsoletes:	mozilla-thunderbird-lang-bn < 32
-BuildArch:	noarch
-
-%description lang-bn
-Bengali (Bangladesh) resources for Thunderbird.
-
-%description lang-bn -l pl.UTF-8
-Bengalskie pliki językowe dla Thunderbirda (wersja dla Bangladeszu).
-
 %package lang-br
 Summary:	Breton resources for Thunderbird
 Summary(pl.UTF-8):	Bretońskie pliki językowe dla Thunderbirda
@@ -1246,22 +1230,6 @@ Swedish resources for Thunderbird.
 
 %description lang-sv -l pl.UTF-8
 Szwedzkie pliki językowe dla Thunderbirda.
-
-%package lang-ta_LK
-Summary:	Tamil (Sri Lanka) resources for Thunderbird
-Summary(pl.UTF-8):	Tamilskie pliki językowe dla Thunderbirda (wersja dla Sri Lanki)
-Group:		I18n
-Requires:	thunderbird >= %{version}
-Provides:	thunderbird-lang-resources = %{version}
-Obsoletes:	icedove-lang-ta_LK < 39
-Obsoletes:	mozilla-thunderbird-lang-ta_LK < 32
-BuildArch:	noarch
-
-%description lang-ta_LK
-Tamil (Sri Lanka) resources for Thunderbird.
-
-%description lang-ta_LK -l pl.UTF-8
-Tamilskie pliki językowe dla Thunderbirda (wersja dla Sri Lanki).
 
 %package lang-th
 Summary:	Thai resources for Thunderbird
