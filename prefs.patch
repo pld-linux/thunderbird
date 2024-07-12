@@ -2,7 +2,7 @@
 +++ mozilla/comm/mail/app/profile/all-thunderbird.js	2008-06-24 13:22:48.000000000 +0200
 @@ -55,7 +55,7 @@
  // should no longer be used directly. Instead, getAppUpdateAutoEnabled and
- // getAppUpdateAutoEnabled from UpdateUtils.jsm should be used.
+ // getAppUpdateAutoEnabled from UpdateUtils.sys.mjs should be used.
  #ifndef XP_WIN
 - pref("app.update.auto", true);
 + pref("app.update.auto", false);
@@ -15,9 +15,9 @@
  // analyze urls in mail messages for scams
 -pref("mail.phishing.detection.enabled", true);
 +pref("mail.phishing.detection.enabled", false);
- // If phishing detection is enabled, allow fine grained control
- // of the local, static tests
- pref("mail.phishing.detection.ipaddresses", true);
+ pref("mail.phishing.detection.disallow_form_actions", true);
+ 
+ pref("browser.safebrowsing.reportPhishURL", "https://%LOCALE%.phish-report.mozilla.com/?hl=%LOCALE%");
 --- mozilla.orig/modules/libpref/init/all.js
 +++ mozilla/modules/libpref/init/all.js
 @@ -1053,6 +1053,7 @@ pref("javascript.options.ion.offthread_compilation", true);
