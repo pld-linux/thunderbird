@@ -1342,12 +1342,15 @@ Traditional Chinese resources for Thunderbird.
 Chińskie tradycyjne pliki językowe dla Thunderbirda.
 
 %prep
-unpack() {
-	local args="$1" file="$2"
-	cp -p $file .
-}
-%define __unzip unpack
-%setup -q %(seq -f '-a %g' 100 165 | xargs)
+%setup -q
+for s in %sources; do
+	case $s in
+	*.xpi)
+		cp -p $s .
+		;;
+	esac
+done
+
 %patch0 -p1
 %patch2 -p0
 %patch3 -p1
