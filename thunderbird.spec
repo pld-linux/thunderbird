@@ -182,6 +182,7 @@ Source164:	https://releases.mozilla.org/pub/thunderbird/releases/%{version}esr/l
 Source165:	https://releases.mozilla.org/pub/thunderbird/releases/%{version}esr/linux-x86_64/xpi/zh-TW.xpi
 # Source165-md5:	660e2540e1e7de1ffe351afe65f74b30
 Patch0:		prefs.patch
+Patch1:		icu76.patch
 Patch2:		enable-addons.patch
 Patch3:		glibc-2.34.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
@@ -1351,9 +1352,10 @@ for s in %sources; do
 	esac
 done
 
-%patch0 -p1
-%patch2 -p0
-%patch3 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p0
+%patch -P3 -p1
 
 %build
 cp -p %{_datadir}/automake/config.* build/autoconf
