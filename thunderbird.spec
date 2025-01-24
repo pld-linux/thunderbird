@@ -1404,6 +1404,9 @@ ac_add_options --enable-crash-on-assert
 %else
 ac_add_options --disable-debug
 %endif
+%if 0%{?_enable_debug_packages} == 0
+ac_add_options --disable-debug-symbols
+%endif
 ac_add_options --disable-strip
 ac_add_options --disable-install-strip
 %if %{with tests}
