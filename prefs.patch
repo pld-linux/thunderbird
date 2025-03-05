@@ -10,7 +10,7 @@
  
  // If set to true, the Update Service will apply updates in the background
 @@ -416,7 +416,7 @@
- #endif
+ 
  
  // analyze urls in mail messages for scams
 -pref("mail.phishing.detection.enabled", true);
