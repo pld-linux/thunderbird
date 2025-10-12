@@ -239,7 +239,7 @@ BuildRequires:	python3-setuptools
 BuildRequires:	python3-simplejson
 BuildRequires:	python3-virtualenv >= 20
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.025
+BuildRequires:	rpmbuild(macros) >= 2.050
 BuildRequires:	rust >= 1.82.0
 BuildRequires:	rust-cbindgen >= 0.27.0
 BuildRequires:	sed >= 4.0
@@ -266,6 +266,7 @@ BuildRequires:	zlib-devel >= 1.2.3
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post):	mktemp >= 1.5-18
+%{?rust_req}
 Requires:	aom >= 3.0.0
 %{?with_system_cairo:Requires:	cairo >= 1.10.2-5}
 Requires:	dav1d >= 1.2.1
