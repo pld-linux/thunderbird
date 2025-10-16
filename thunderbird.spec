@@ -35,6 +35,22 @@ curl -s $U | sed -ne 's,.*href="\([^"]\+\)/".*,'"$U"'xpi/\1.xpi,p'
 %define		with_lowmem	1
 %endif
 
+%if %{with clang}
+%define		clang_ver	%(rpm -q --qf='%%{V}' clang 2> /dev/null || echo ERROR)
+%endif
+
+%ifarch %{ix86}
+%if %{with clang}
+%if %{_ver_ge %{clang_ver} 20}
+%define		x86_simd	sse2
+%else
+%define		x86_simd	mmx
+%endif
+%else
+%define		x86_simd	mmx
+%endif
+%endif
+
 %define		nspr_ver	4.32
 %define		nss_ver		3.116
 
@@ -42,7 +58,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	144.0
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	https://releases.mozilla.org/pub/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -288,6 +304,9 @@ Requires:	nss >= 1:%{nss_ver}
 Requires:	pango >= 1:1.22.0
 Requires:	pixman >= 0.36.0
 Requires:	xorg-lib-libxkbcommon >= 0.4.1
+%ifarch %{ix86}
+Requires:	cpuinfo(%{x86_simd})
+%endif
 Obsoletes:	icedove < 39
 Obsoletes:	mozilla-thunderbird < 32
 Obsoletes:	mozilla-thunderbird-dictionary-en-US < 2.0
@@ -1379,8 +1398,8 @@ export CC="%{__cc}"
 export CXX="%{__cxx}"
 %endif
 %ifarch %{ix86}
-export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
-export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
+export CFLAGS="%{rpmcflags} %{!?with_system_libvpx:-m%{x86_simd}} -D_FILE_OFFSET_BITS=64"
+export CXXFLAGS="%{rpmcxxflags} -m%{x86_simd} -D_FILE_OFFSET_BITS=64"
 %else
 export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
 export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
