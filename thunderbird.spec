@@ -235,6 +235,7 @@ BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	libwebp-devel >= 1.0.2
 %{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.10.0}
 BuildRequires:	libxcb-devel
+%{?with_clang:BuildRequires:	lld}
 BuildRequires:	llvm-devel >= 8.0
 BuildRequires:	mozldap-devel
 BuildRequires:	nodejs >= 12.22.12
@@ -1393,6 +1394,10 @@ mk_add_options MOZ_OBJDIR=%{objdir}
 %if %{with clang}
 export CC="clang"
 export CXX="clang++"
+export LLVM_PROFDATA="llvm-profdata"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export RANLIB="llvm-ranlib"
 %else
 export CC="%{__cc}"
 export CXX="%{__cxx}"
@@ -1457,6 +1462,7 @@ ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-default-toolkit=cairo-gtk3
 %{?with_official:ac_add_options --enable-official-branding}
 %{?with_gold:ac_add_options --enable-linker=gold}
+%{?with_clang:ac_add_options --enable-linker=lld}
 %{?with_shared_js:ac_add_options --enable-shared-js}
 %{?with_system_cairo:ac_add_options --enable-system-cairo}
 ac_add_options --with-system-pixman
