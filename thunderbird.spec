@@ -1410,6 +1410,8 @@ export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
 export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
 %endif
 
+export RUSTFLAGS="%{rpmrustflags}"
+
 %if %{with lowmem}
 export CFLAGS="$CFLAGS -g0"
 export CXXFLAGS="$CXXFLAGS -g0"
@@ -1417,7 +1419,11 @@ export MOZ_DEBUG_FLAGS=" "
 export LLVM_USE_SPLIT_DWARF=1
 export LLVM_PARALLEL_LINK_JOBS=1
 export MOZ_LINK_FLAGS="-Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
-export RUSTFLAGS="-Cdebuginfo=0"
+export RUSTFLAGS="$RUSTFLAGS -Clto=thin"
+%endif
+
+%if %{with lowmem2}
+export RUSTFLAGS="$RUSTFLAGS -Clto=no"
 %endif
 
 %if %{with crashreporter}
