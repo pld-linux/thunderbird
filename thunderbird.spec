@@ -198,6 +198,7 @@ Source164:	https://releases.mozilla.org/pub/thunderbird/releases/%{version}/linu
 Source165:	https://releases.mozilla.org/pub/thunderbird/releases/%{version}/linux-x86_64/xpi/zh-TW.xpi
 # Source165-md5:	ecc0e268a7430bd8017496de045e75a9
 Patch0:		prefs.patch
+Patch1:		custom-rust-lto.patch
 Patch2:		enable-addons.patch
 Patch3:		glibc-2.34.patch
 Patch4:		system-av1-link.patch
@@ -1381,6 +1382,7 @@ for s in %sources; do
 done
 
 %patch -P0 -p1
+%patch -P1 -p1
 %patch -P2 -p0
 %patch -P3 -p1
 %patch -P4 -p1
@@ -1419,11 +1421,6 @@ export MOZ_DEBUG_FLAGS=" "
 export LLVM_USE_SPLIT_DWARF=1
 export LLVM_PARALLEL_LINK_JOBS=1
 export MOZ_LINK_FLAGS="-Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
-export RUSTFLAGS="$RUSTFLAGS -Clto=thin"
-%endif
-
-%if %{with lowmem2}
-export RUSTFLAGS="$RUSTFLAGS -Clto=no"
 %endif
 
 %if %{with crashreporter}
@@ -1501,6 +1498,14 @@ jobs="%{__jobs}"
 export MOZ_PARALLEL_BUILD
 %else
 %{?__jobs:export MOZ_PARALLEL_BUILD="%__jobs"}
+%endif
+
+%if %{with lowmem}
+export RUST_LTO="thin"
+%endif
+
+%if %{with lowmem2}
+export RUST_LTO="none"
 %endif
 
 export MOZBUILD_STATE_PATH="$(pwd)/.mozbuild"
