@@ -1,5 +1,4 @@
 # TODO:
-# - build with system mozldap
 # - do something with *.rdf file, there is file conflict with other lang packages
 #
 # Conditional builds
@@ -238,7 +237,6 @@ BuildRequires:	libwebp-devel >= 1.0.2
 BuildRequires:	libxcb-devel
 %{?with_clang:BuildRequires:	lld}
 BuildRequires:	llvm-devel >= 8.0
-BuildRequires:	mozldap-devel
 BuildRequires:	nodejs >= 12.22.12
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
 BuildRequires:	nss-devel >= 1:%{nss_ver}
