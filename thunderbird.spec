@@ -201,6 +201,7 @@ Patch1:		custom-rust-lto.patch
 Patch2:		enable-addons.patch
 Patch3:		glibc-2.34.patch
 Patch4:		system-av1-link.patch
+Patch5:		libatomic-check.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	Mesa-libgbm-devel
 BuildRequires:	alsa-lib-devel
@@ -1385,6 +1386,7 @@ done
 %patch -P2 -p0
 %patch -P3 -p1
 %patch -P4 -p1
+%patch -P5 -p1
 
 # https://bugzilla.mozilla.org/show_bug.cgi?id=2006630
 find comm/third_party/rust -name .cargo-checksum.json | \
