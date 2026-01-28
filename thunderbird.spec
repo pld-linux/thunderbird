@@ -202,6 +202,7 @@ Patch2:		enable-addons.patch
 Patch3:		glibc-2.34.patch
 Patch4:		system-av1-link.patch
 Patch5:		libatomic-check.patch
+Patch6:		glibc2.43.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	Mesa-libgbm-devel
 BuildRequires:	alsa-lib-devel
@@ -256,7 +257,7 @@ BuildRequires:	python3-setuptools
 BuildRequires:	python3-simplejson
 BuildRequires:	python3-virtualenv >= 20
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.050
+BuildRequires:	rpmbuild(macros) >= 2.051
 BuildRequires:	rust >= 1.82.0
 BuildRequires:	rust-cbindgen >= 0.29.1
 BuildRequires:	sed >= 4.0
@@ -1387,11 +1388,14 @@ done
 %patch -P3 -p1
 %patch -P4 -p1
 %patch -P5 -p1
+%patch -P6 -p1
 
 # https://bugzilla.mozilla.org/show_bug.cgi?id=2006630
 find comm/third_party/rust -name .cargo-checksum.json | \
 	xargs grep -l 'git\(attributes\|modules\)' | \
 	xargs sed -i -e 's@"\([^"]*/\)\?\.git\(attributes\|modules\)"[^,]*,@@'
+
+%update_cargo_checksum comm/third_party/rust/glslopt/glsl-optimizer/include/c11/threads.h
 
 %build
 cp -p %{_datadir}/automake/config.* build/autoconf
