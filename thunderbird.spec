@@ -317,6 +317,7 @@ Obsoletes:	thunderbird-addon-lightning < 78.0
 Obsoletes:	thunderbird-lang-fa < 91.0
 Obsoletes:	thunderbird-lang-si < 91.0
 Conflicts:	thunderbird-lang-resources < %{version}
+ExcludeArch:	x32
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		filterout_cpp		-D_FORTIFY_SOURCE=[0-9]+
