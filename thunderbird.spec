@@ -57,7 +57,7 @@ Summary:	Thunderbird - email client
 Summary(pl.UTF-8):	Thunderbird - klient poczty
 Name:		thunderbird
 Version:	152.0
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Mail
 Source0:	https://releases.mozilla.org/pub/thunderbird/releases/%{version}/source/%{name}-%{version}.source.tar.xz
@@ -202,6 +202,8 @@ Patch2:		enable-addons.patch
 Patch4:		system-av1-link.patch
 Patch5:		libatomic-check.patch
 Patch6:		glibc2.43.patch
+Patch7:		types.patch
+Patch8:		includes.patch
 URL:		http://www.mozilla.org/projects/thunderbird/
 BuildRequires:	Mesa-libgbm-devel
 BuildRequires:	alsa-lib-devel
@@ -1389,6 +1391,8 @@ done
 %patch -P4 -p1
 %patch -P5 -p1
 %patch -P6 -p1
+%patch -P7 -p1
+%patch -P8 -p1
 
 %update_cargo_checksum comm/third_party/rust/glslopt/glsl-optimizer/include/c11/threads.h
 
