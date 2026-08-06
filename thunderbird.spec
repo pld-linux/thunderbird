@@ -1421,7 +1421,7 @@ export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
 export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
 %endif
 
-export RUSTFLAGS="%{rpmrustflags}"
+export RUSTFLAGS="%{rpmrustflags} -C strip=debuginfo"
 export CARGO_TERM_VERBOSE=true
 
 %if %{with lowmem}
