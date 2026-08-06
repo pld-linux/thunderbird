@@ -327,6 +327,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		filterout		-fvar-tracking-assignments
 %endif
 
+%if %{with lowmem}
+%define	specrustflags -C strip=symbols
+%endif
+
 # firefox/thunderbird/seamonkey provide their own versions
 %define		_noautoprovfiles	%{_libdir}/%{name}/components
 
@@ -1431,7 +1435,6 @@ export MOZ_DEBUG_FLAGS=" "
 export LLVM_USE_SPLIT_DWARF=1
 export LLVM_PARALLEL_LINK_JOBS=1
 export MOZ_LINK_FLAGS="-Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
-%define	specrustflags -C strip=symbols
 %endif
 
 %if %{with crashreporter}
