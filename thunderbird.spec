@@ -1421,7 +1421,7 @@ export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
 export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
 %endif
 
-export RUSTFLAGS="%{rpmrustflags} -C strip=debuginfo"
+export RUSTFLAGS="%{rpmrustflags}"
 export CARGO_TERM_VERBOSE=true
 
 %if %{with lowmem}
@@ -1431,6 +1431,7 @@ export MOZ_DEBUG_FLAGS=" "
 export LLVM_USE_SPLIT_DWARF=1
 export LLVM_PARALLEL_LINK_JOBS=1
 export MOZ_LINK_FLAGS="-Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
+%define	specrustflags -C strip=symbols
 %endif
 
 %if %{with crashreporter}
